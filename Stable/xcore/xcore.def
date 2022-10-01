@@ -1,0 +1,26 @@
+LIBRARY xcore
+
+;Description 'XCore basic library'
+
+EXETYPE WINDOWS
+
+HEAPSIZE 256000
+
+VERSION 0.001
+
+EXPORTS
+	@fstrlen@4
+	@xmalloc@4
+	@xmalloc_tmp@4
+	@xfree@4
+	@fstreq@8
+	@fstrneq@12
+	@fitoa@8
+	@xlist_new_node@8
+	@xlist_free_nodes@4
+	@fget_extension@4
+	@fget_filename@4
+	xxx_printf=?printf@XGlobal@@QAAXKPBDZZ
+	xxx_bitch=@xxx_bitch@4
+	xxx_throw=@xxx_throw@4
+	DllMain

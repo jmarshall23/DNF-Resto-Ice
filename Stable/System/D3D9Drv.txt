@@ -1,0 +1,20 @@
+Duke Nukem Forever 2001 Direct3D 9 Driver
+-----------------------------------------
+The recommended way to set up the Direct3D 9 driver is to create your player profile with the original
+Direct3D 8 driver that came with the game. Then go into the 'Players' directory and navigate into your
+player profile directory. Edit your 'DukeForever.ini' file, replacing all instances of 'D3DDrv' with
+'D3D9Drv'.
+
+When you next launch the game, go into video settings and you should see 'Direct3D 9 Support' as the
+active driver. If something went wrong, it will fall back to the Direct3D 8 driver, which you'll be
+able to see on that screen.
+
+Additional notes:
+ * The game currently crashes when changing resolutions or window sizes with the Direct3D 9 driver, if
+    this happens, simply restart the game for those changes to take effect.
+ * You can enable VSync by setting 'UseVSync=True' under the '[D3D9Drv.D3DRenderDevice]' section of
+    your 'DukeForever.ini' file.
+ * While the older 'Direct3D 8 Extensions' library did not need additional external dlls, the newer
+    version for Direct3D 9 requires 'd3dx9_43.dll' which is not included with Windows by default, to
+	simplify the usage of the driver, I've included this dll so you don't have to install the full
+	DirectX redistributable package.

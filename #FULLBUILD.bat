@@ -1,0 +1,6 @@
+echo Building the game...
+call #REBUILD_USCRIPT.bat
+REM echo Launching the game...
+call #RUN_GAME_DEBUG.bat
+cd ..
+cd ..

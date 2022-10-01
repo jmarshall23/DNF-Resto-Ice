@@ -1,0 +1,7 @@
+# Auto detect text files and perform LF normalization
+*.bat   text eol=crlf
+*.ini   text eol=crlf
+
+# This files gets "corrupted" if we use linux end lines
+*.dsw   text eol=crlf
+*.dsp   text eol=crlf
