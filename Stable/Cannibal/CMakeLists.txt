@@ -168,7 +168,6 @@ target_compile_definitions(Cannibal PRIVATE
 
 target_link_directories(Cannibal PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}
-    msvcirt
 )
 target_link_libraries(Cannibal PUBLIC
     xcore

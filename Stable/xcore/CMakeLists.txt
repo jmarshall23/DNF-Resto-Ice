@@ -19,7 +19,7 @@ set(Source_Files
 	"list.cpp"
 	"file.cpp"
 	"find.cpp"
-	"malloc.asm"
+#	"malloc.asm"
 	"winalloc.cpp"
 	"dll.cpp"
 	"error.cpp"
