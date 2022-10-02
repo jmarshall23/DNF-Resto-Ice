@@ -5,6 +5,7 @@
 	Base actor of DNF AI.
 =============================================================================*/
 class AIPawn expands Pawn
+	native
 	abstract;
 
 /*-----------------------------------------------------------------------------
@@ -65,7 +66,7 @@ var NPCActivityEvent	CurrentActivityEvent;
 var CreatureFactory		MyFactory;
 
 // Handling of frame based animation events
-struct SNPCAnimEvent
+struct native SNPCAnimEvent
 {
 	var()	sound	EventSound;
 	var()	bool	bEnabled;
@@ -164,6 +165,11 @@ function StopMoving()
 	Acceleration = vect(0,0,0);
 	Velocity = vect(0,0,0);
 	MoveTimer = -1.0;
+}
+
+event StopMovingNative()
+{
+	StopMoving();
 }
 
 // Implement in subclass

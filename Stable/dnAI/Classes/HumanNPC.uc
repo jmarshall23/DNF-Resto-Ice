@@ -2,6 +2,7 @@
 // HumanNPC.uc
 //=============================================================================
 class HumanNPC expands AIPawn
+	native
 	abstract;
 
 #exec OBJ LOAD FILE=..\Textures\m_characters.dtx
@@ -108,7 +109,7 @@ var bool					bNoPain;
 var bool					bEyesShut;
 
 // Info (mounting offsets, etc. for the HeadCreeper to use)
-struct SHeadCreeperInfo
+struct native SHeadCreeperInfo
 {
 	var() Texture		HeadTex;
 	var() vector		MountOrigin;
@@ -144,7 +145,7 @@ var( Orders )  name					Orders;					// orders a bot is carrying out << JC: TBD >
 var bool		bAtCoverPoint;
 
 // NPC Weapon arming info. 
-struct SNPCWeaponInfo
+struct native SNPCWeaponInfo
 {
 	var() string		WeaponClass;
 	var() int			PrimaryAmmoCount;
@@ -159,7 +160,7 @@ var( AIStartup ) SNPCWeaponInfo WeaponInfo[ 9 ];
 /*-----------------------------------------------------------------------------
 	NPC/Creature Tracking
 -----------------------------------------------------------------------------*/
-struct SCreatureTrackingInfo
+struct native SCreatureTrackingInfo
 {
 	var() float		TrackTimer;				// variable-used timer counted down to zero at tick time
 	var() rotator	Rotation;				// current rotation of the tracking angle
@@ -286,7 +287,7 @@ enum EBrowExpression
 var EMouthExpression	MouthExpression;
 var EBrowExpression		BrowExpression;
 
-struct ESpeechInfo
+struct native ESpeechInfo
 {
 	var() bool				RetainNoTorsoTracking;
 	var() bool				RetainHeadTracking;
@@ -364,7 +365,7 @@ var TentacleSmall MiniTentacle1, MiniTentacle2, MiniTentacle3, MiniTentacle4, Te
 	TentacleFootL, TentacleShinR, TentacleShinL, TentaclePelvis;
 
 // 0 = Mouth, 1 = Shoulder1, 2 = Shoulder2, 3 = Temporary
-struct STentacleOffsets
+struct native STentacleOffsets
 {
 	var() vector	MouthOffset;
 	var() vector	RightShoulderOffset;
