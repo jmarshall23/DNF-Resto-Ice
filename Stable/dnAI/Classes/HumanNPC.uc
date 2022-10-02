@@ -392,13 +392,7 @@ var( AIStartup ) name			UseTriggerEvent;
 const EnemyEgoKillValue = 8;
 const FriendlyEgoKillValue = -25;
 
-function TakeDamage( int Damage, Pawn instigatedBy, vector HitLocation, vector Momentum, class<DamageType> DamageType )
-{
-	if( bNPCInvulnerable )
-		return;
-	else
-		Super.TakeDamage( Damage, instigatedBy, HitLocation, Momentum, DamageType );
-}
+native function TakeDamage( int Damage, Pawn instigatedBy, vector HitLocation, vector Momentum, class<DamageType> DamageType );
 
 function Timer( optional int TimerNum )
 {

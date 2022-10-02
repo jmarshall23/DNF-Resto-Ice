@@ -18,7 +18,7 @@
 
 AUTOGENERATE_NAME(StopMovingNative)
 
-#ifndef NAMES_ONLY
+#if !defined(NAMES_ONLY) || defined(DN_FORCE_NAME_EXPORT)
 
 struct DNAI_API FSNPCAnimEvent
 {
@@ -414,6 +414,7 @@ public:
     FLOAT TimeExisted;
     BITFIELD bReEnableUseTrigger:1 GCC_PACK(4);
     FName UseTriggerEvent GCC_PACK(4);
+    DECLARE_FUNCTION(execTakeDamage);
     DECLARE_CLASS(AHumanNPC,AAIPawn,0|CLASS_Config)
     NO_DEFAULT_CONSTRUCTOR(AHumanNPC)
 };
@@ -439,6 +440,7 @@ public:
 
 #endif
 
+AUTOGENERATE_FUNCTION(AHumanNPC,-1,execTakeDamage);
 AUTOGENERATE_FUNCTION(APigCop,-1,execStateShootEnemy);
 AUTOGENERATE_FUNCTION(APigCop,-1,execStateApproachingEnemy);
 AUTOGENERATE_FUNCTION(APigCop,-1,execTickAI);
