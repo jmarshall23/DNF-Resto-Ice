@@ -114,7 +114,7 @@ void UEngine::InitAudio()
 	&&	GIsClient
 	&&	!ParseParam(appCmdLine(),TEXT("NOSOUND")) )
 	{
-		UClass* AudioClass = StaticLoadClass( UAudioSubsystem::StaticClass(), NULL, TEXT("ini:Engine.Engine.AudioDevice"), NULL, LOAD_NoFail, NULL );
+		UClass* AudioClass = StaticLoadClass( UAudioSubsystem::StaticClass(), NULL, TEXT("FmodAudio.AudioFmodSubsystem"), NULL, LOAD_NoFail, NULL );
 		Audio = ConstructObject<UAudioSubsystem>( AudioClass );
 		if( !Audio->Init() )
 		{

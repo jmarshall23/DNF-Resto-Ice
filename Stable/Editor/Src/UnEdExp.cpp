@@ -209,7 +209,9 @@ UBOOL UClassExporterH::ExportText( UObject* Object, const TCHAR* Type, FOutputDe
 			for( i=0; i<FName::GetMaxNames(); i++ )
 				if( FName::GetEntry(i) )
 					FName::GetEntry(i)->Flags &= ~RF_TagExp;
-			Ar.Logf( TEXT("\r\n#ifndef NAMES_ONLY\r\n\r\n") );
+// jmarshall
+			Ar.Logf( TEXT("\r\n#if !defined(NAMES_ONLY) || defined(DN_FORCE_NAME_EXPORT)\r\n\r\n") );
+// jmarshall end
 		}
 
 		// Enum definitions.

@@ -3439,7 +3439,7 @@ function SubtractEgo( int SubtractedEgo )
 		Health = 1;
 }
 
-function TakeDamage( int Damage, Pawn InstigatedBy, vector HitLocation, vector Momentum, class<DamageType> DamageType )
+simulated event TakeDamageEvent( int Damage, Pawn InstigatedBy, vector HitLocation, vector Momentum, class<DamageType> DamageType )
 {
 	local int actualDamage;
 	local bool bAlreadyDead;
@@ -3610,6 +3610,11 @@ function TakeDamage( int Damage, Pawn InstigatedBy, vector HitLocation, vector M
 	// JC: DamageBone was being set to none too early for HumanNPCs.
 	if( !self.IsA( 'HumanNPC' ) )
 		DamageBone = '';
+}
+
+function TakeDamage( int Damage, Pawn InstigatedBy, vector HitLocation, vector Momentum, class<DamageType> DamageType )
+{
+	TakeDamageEvent(Damage, InstigatedBy, HitLocation, Momentum, DamageType);
 }
 
 // Spawns a client side hit effect.  Everything spawned here should have no remote role.

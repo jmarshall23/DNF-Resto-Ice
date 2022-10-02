@@ -165,8 +165,9 @@ AUTOGENERATE_NAME(GlassRespawned)
 AUTOGENERATE_NAME(EnumSurfsInRadiusCB)
 AUTOGENERATE_NAME(TickVibration)
 AUTOGENERATE_NAME(StoppedRolling)
+AUTOGENERATE_NAME(TakeDamageEvent)
 
-#ifndef NAMES_ONLY
+#if !defined(NAMES_ONLY) || defined(DN_FORCE_NAME_EXPORT)
 
 enum EMusicTransition
 {
@@ -3420,6 +3421,14 @@ struct APawn_eventAnimTick_Parms
 {
     FLOAT DeltaTime;
 };
+struct APawn_eventTakeDamageEvent_Parms
+{
+    INT Damage;
+    class APawn* InstigatedBy;
+    FVector HitLocation;
+    FVector Momentum;
+    class UClass* DamageType;
+};
 struct APawn_eventUpdateTactics_Parms
 {
     FLOAT DeltaTime;
@@ -3834,6 +3843,16 @@ public:
         APawn_eventAnimTick_Parms Parms;
         Parms.DeltaTime=DeltaTime;
         ProcessEvent(FindFunctionChecked(ENGINE_AnimTick),&Parms);
+    }
+    inline void __fastcall eventTakeDamageEvent(INT Damage, class APawn* InstigatedBy, FVector HitLocation, FVector Momentum, class UClass* DamageType)
+    {
+        APawn_eventTakeDamageEvent_Parms Parms;
+        Parms.Damage=Damage;
+        Parms.InstigatedBy=InstigatedBy;
+        Parms.HitLocation=HitLocation;
+        Parms.Momentum=Momentum;
+        Parms.DamageType=DamageType;
+        ProcessEvent(FindFunctionChecked(ENGINE_TakeDamageEvent),&Parms);
     }
     inline void __fastcall eventUpdateTactics(FLOAT DeltaTime)
     {

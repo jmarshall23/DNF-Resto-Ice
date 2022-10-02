@@ -130,12 +130,13 @@ int main( int argc, char* argv[] )
 		GLazyLoad = 0;
 		UBOOL Help = 0;
 		DWORD LoadFlags = LOAD_NoWarn | LOAD_Quiet;
+// jmarshall - makes this easier to test ucc with make and cmake, if nothing on the command line just assume we are going to compile unrealscripts.
 		if( Token==TEXT("") )
 		{
-			ShowBanner( Warn );
-			Warn.Logf( TEXT("Use \"ucc help\" for help") );
+			Token = TEXT("MAKE");
 		}
-		else if( Token==TEXT("HELP") )
+// jmarshall end
+		if( Token==TEXT("HELP") )
 		{
 			ShowBanner( Warn );
 			verify(UObject::StaticLoadClass( UCommandlet::StaticClass(), NULL, TEXT("Engine.Commandlet"), NULL, LOAD_NoFail, NULL )==UCommandlet::StaticClass());
