@@ -16,6 +16,7 @@ class Actor extends Object
 cpptext
 {
 	void SetCallbackTimer(float NewTimerRate, UBOOL bLoop, FName CallbackName);
+	void EndCallbackTimer(FName CallbackName);
 }
 
 // Imported data (during full rebuild).

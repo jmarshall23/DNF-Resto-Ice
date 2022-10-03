@@ -1412,19 +1412,16 @@ void AActor::execSetCallbackTimer( FFrame& Stack, RESULT_DECL )
 	SetCallbackTimer(NewTimerRate, bLoop, CallbackName);
 }
 
-void AActor::execEndCallbackTimer( FFrame& Stack, RESULT_DECL )
+void AActor::EndCallbackTimer(FName CallbackName)
 {
-	P_GET_NAME(CallbackName);
-	P_FINISH;
-
-	UFunction* Callback = FindFunction( CallbackName );
-	if ( Callback == NULL )
+	UFunction* Callback = FindFunction(CallbackName);
+	if (Callback == NULL)
 		return;
 
 	// Find the callback timer which matches this function and remove it.
-	for ( INT i=0; i<CallbackTimerPointers.Num(); i++ )
+	for (INT i = 0; i < CallbackTimerPointers.Num(); i++)
 	{
-		if ( CallbackTimerPointers(i) == (INT) Callback )
+		if (CallbackTimerPointers(i) == (INT)Callback)
 		{
 			CallbackTimerRates.Remove(i);
 			CallbackTimerCounters.Remove(i);
@@ -1433,6 +1430,12 @@ void AActor::execEndCallbackTimer( FFrame& Stack, RESULT_DECL )
 			return;
 		}
 	}
+}
+
+void AActor::execEndCallbackTimer( FFrame& Stack, RESULT_DECL )
+{
+	P_GET_NAME(CallbackName);
+	P_FINISH;
 }
 
 void AActor::execSetTimerCounter( FFrame& Stack, RESULT_DECL )

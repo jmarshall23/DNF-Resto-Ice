@@ -6,7 +6,9 @@ class Grunt extends HumanNPC
 cpptext
 {
 	void EstablishCover(void);
+
 	void SetAutoFireOn(void);
+	void SetAutoFireOff(void);
 }
 
 var SniperPoint TestDot;
@@ -63,10 +65,7 @@ var float CoverRadius;
 native function EnablePainAnims();
 native function SetAutoFireOn();
 
-function SetAutoFireOff()
-{
-	EndCallBackTimer( 'AutoFireWeapon' );
-}
+native function SetAutoFireOff();
 
 function AutoFireWeapon()
 {

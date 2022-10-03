@@ -52,20 +52,20 @@ public:
 };
 
 
-class DNGAME_API AM16 : public AdnWeapon
+class DNGAME_API AShotgun : public AdnWeapon
 {
 public:
-    FLOAT FireAccuracy;
-    INT BurstCount;
-    FRotator RestRotation;
-    FRotator DesiredViewRotation;
-    FRotator ViewRotationRate;
-    FLOAT LastLookUp;
-    FLOAT LastTurn;
-    BITFIELD RotateToDesiredView:1 GCC_PACK(4);
-    class USound* DryFireSound GCC_PACK(4);
-    DECLARE_CLASS(AM16,AdnWeapon,0)
-    NO_DEFAULT_CONSTRUCTOR(AM16)
+    INT PelletCount;
+    FLOAT PelletRandHoriz;
+    FLOAT PelletRandVert;
+    INT Pellet;
+    FLOAT ShotHoriz[10];
+    FLOAT ShotVert[10];
+    class AHitPackage_Shotgun* MetaHit;
+    INT MetaHitIndex;
+    BITFIELD ClientInterruptReload:1 GCC_PACK(4);
+    DECLARE_CLASS(AShotgun,AdnWeapon,0)
+    NO_DEFAULT_CONSTRUCTOR(AShotgun)
 };
 
 
@@ -86,20 +86,20 @@ public:
 };
 
 
-class DNGAME_API AShotgun : public AdnWeapon
+class DNGAME_API AM16 : public AdnWeapon
 {
 public:
-    INT PelletCount;
-    FLOAT PelletRandHoriz;
-    FLOAT PelletRandVert;
-    INT Pellet;
-    FLOAT ShotHoriz[10];
-    FLOAT ShotVert[10];
-    class AHitPackage_Shotgun* MetaHit;
-    INT MetaHitIndex;
-    BITFIELD ClientInterruptReload:1 GCC_PACK(4);
-    DECLARE_CLASS(AShotgun,AdnWeapon,0)
-    NO_DEFAULT_CONSTRUCTOR(AShotgun)
+    FLOAT FireAccuracy;
+    INT BurstCount;
+    FRotator RestRotation;
+    FRotator DesiredViewRotation;
+    FRotator ViewRotationRate;
+    FLOAT LastLookUp;
+    FLOAT LastTurn;
+    BITFIELD RotateToDesiredView:1 GCC_PACK(4);
+    class USound* DryFireSound GCC_PACK(4);
+    DECLARE_CLASS(AM16,AdnWeapon,0)
+    NO_DEFAULT_CONSTRUCTOR(AM16)
 };
 
 #endif

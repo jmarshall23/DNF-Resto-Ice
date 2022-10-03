@@ -57,10 +57,21 @@ void AGrunt::SetAutoFireOn(void)
 	SetCallbackTimer(i, true, TEXT("AutoFireWeapon"));
 }
 
+void AGrunt::SetAutoFireOff(void)
+{
+	EndCallbackTimer(TEXT("AutoFireWeapon"));
+}
+
 void AGrunt::execSetAutoFireOn(FFrame& Stack, RESULT_DECL)
 {
 	P_FINISH;
 	SetAutoFireOn();
+}
+
+void AGrunt::execSetAutoFireOff(FFrame& Stack, RESULT_DECL)
+{
+	P_FINISH;
+	SetAutoFireOff();
 }
 
 void AGrunt::execEnablePainAnims(FFrame& Stack, RESULT_DECL)
