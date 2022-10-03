@@ -2,7 +2,8 @@
 	Pistol
 	Author: Brandon Reinhart
 -----------------------------------------------------------------------------*/
-class Pistol expands dnWeapon;
+class Pistol expands dnWeapon
+	native;
 
 #exec OBJ LOAD FILE=..\Meshes\c_dnWeapon.dmx
 #exec OBJ LOAD FILE=..\Sounds\dnsWeapn.dfx

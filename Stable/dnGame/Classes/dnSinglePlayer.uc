@@ -2,7 +2,8 @@
 	dnSinglePlayer
 	Author: Brandon Reinhart
 -----------------------------------------------------------------------------*/
-class dnSinglePlayer expands GameInfo;
+class dnSinglePlayer expands GameInfo
+	native;
 
 #exec OBJ LOAD FILE=..\Sounds\a_dukevoice.dfx
 
@@ -49,26 +50,8 @@ event playerpawn Login
 	return NewPlayer;
 }
 
-function AddDefaultInventory( pawn InventoryPawn )
-{
-	local Inventory Inv;
-	local Weapon Weap;
-	local Inventory InventoryItem;
+native function AddDefaultInventory( pawn InventoryPawn );
 
-	// Assign default inventory.
-	Super.AddDefaultInventory( InventoryPawn );
-
-	// Pistol
-	if ( !bNoPistol )
-		GiveWeaponTo( InventoryPawn, class'pistol', true );
-
-	// Todo List
-	// Mod authors: We decided not to implement an objectives list system, so this is only partially implemented and not enabled.
-	// You might be able to trace through all the elements of the objectives/todo list code and do something with it.
-	// Perhaps modeling your own objectives system after it.
-	Inv = spawn(class'ToDoList');
-	Inv.GiveTo( InventoryPawn );
-}
 
 function bool RestartPlayer( pawn aPlayer )	
 {

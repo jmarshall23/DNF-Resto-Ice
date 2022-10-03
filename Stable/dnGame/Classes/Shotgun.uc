@@ -2,7 +2,8 @@
 	Shotgun
 	Author: Brandon Reinhart
 -----------------------------------------------------------------------------*/
-class Shotgun expands dnWeapon;
+class Shotgun expands dnWeapon
+	native;
 
 #exec OBJ LOAD FILE=..\Meshes\c_dnWeapon.dmx
 #exec OBJ LOAD FILE=..\Sounds\dnsWeapn.dfx
@@ -24,7 +25,7 @@ var				bool		ClientInterruptReload;
 /*-----------------------------------------------------------------------------
 	Shell Cases
 -----------------------------------------------------------------------------*/
-
+/*
 simulated function SpawnShell(vector Loc, vector Vel)
 {
 	local int pIndex;
@@ -35,7 +36,7 @@ simulated function SpawnShell(vector Loc, vector Vel)
 	{
 		ShellMaster = spawn(class'dnShellCaseMaster', Pawn(Owner), '', Owner.Location);
 		ShellMaster.Mesh = Mesh'ShotgunShell';
-		ShellMaster.BounceSound = Sound'dnsWeapn.shotgun.ShotgunShDrop03';
+        ShellMaster.BounceSound = Sound'dnsWeapn.shotgun.ShotgunShDrop03';
 	}
 	pIndex = ShellMaster.SpawnParticle(1);
 	if (pIndex!=-1)
@@ -58,7 +59,8 @@ simulated function PlayNotifySound0()
 	local vector X,Y,Z;
 
 	Super.PlayNotifySound0();
-
+	*/
+/*
 	if (GetStateName() == 'Reloading')
 		return;
 
@@ -85,7 +87,11 @@ simulated function PlayNotifySound0()
 			((FRand()*0.1+0.0)*X + (FRand()*0.2+0.3)*Y + (FRand()*0.3+1.1) * Z)*160
 		);
 	}
+*/
+/*
 }
+*/
+
 
 /*-----------------------------------------------------------------------------
 	Damage & Tracing

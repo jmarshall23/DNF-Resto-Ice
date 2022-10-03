@@ -9,7 +9,8 @@
 		- Handling particles.
 		- Installing / Removing HUD interfaces.
 -----------------------------------------------------------------------------*/
-class dnWeapon expands Weapon;
+class dnWeapon expands Weapon
+	native;
 
 #exec OBJ LOAD FILE=..\Textures\hud_effects.dtx
 

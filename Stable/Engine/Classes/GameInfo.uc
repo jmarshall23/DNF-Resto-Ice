@@ -1047,7 +1047,7 @@ event AcceptInventory( pawn PlayerPawn )
 }
 
 // Spawn any default inventory for the player.
-function AddDefaultInventory( pawn P )
+event AddDefaultInventoryBase( pawn P )
 {
 	local Weapon newWeapon;
 	local class<Weapon> WeapClass;
@@ -1058,13 +1058,18 @@ function AddDefaultInventory( pawn P )
 		return;
 
 	// Spawn default weapon.
-	GiveWeaponTo( P, BaseMutator.MutatedDefaultWeapon(), true );
+	GiveWeaponTo( P, BaseMutator.MutatedDefaultWeapon() );
 
 	// Ask the mutator to modify the player.
 	BaseMutator.ModifyPlayer( P );
 }
 
-function GiveWeaponTo( pawn InventoryPawn, class<Weapon> WeapClass, optional bool bForceSwitch )
+function AddDefaultInventory( pawn P )
+{
+	AddDefaultInventoryBase( P );
+}
+
+event GiveWeaponTo( pawn InventoryPawn, class<Weapon> WeapClass, optional bool bForceSwitch )
 {
 	local Weapon newWeapon;
 	local Inventory Inv;
