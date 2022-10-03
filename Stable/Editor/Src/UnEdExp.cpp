@@ -425,6 +425,10 @@ UBOOL UClassExporterH::ExportText( UObject* Object, const TCHAR* Type, FOutputDe
 			Ar.Log( TEXT("|CLASS_NativeReplication") );
 		Ar.Logf( TEXT(")\r\n") );
 		FString Filename = FString(TEXT("..")) * Class->GetOuter()->GetName() * TEXT("Inc") * Class->GetNameCPP() + TEXT(".h");
+
+		if (Class->CppText)
+			Ar.Log(*Class->CppText->Text);
+		
 		if( GFileManager->FileSize(*Filename) > 0 )
 			Ar.Logf( TEXT("    #include \"%s.h\"\r\n"), Class->GetNameCPP() );
 		else
@@ -490,6 +494,14 @@ UBOOL UClassExporterUC::ExportText( UObject* Object, const TCHAR* Type, FOutputD
 	check(Class->GetDefaultObject());
 	check(Class->ScriptText);
 	UExporter::ExportToOutputDevice( Class->ScriptText, NULL, Ar, TEXT("txt"), TextIndent );
+
+	// Export cpptext.
+	if (Class->CppText)
+	{
+		Ar.Log(TEXT("\r\n\r\ncpptext\r\n{\r\n"));
+		Ar.Log(*Class->CppText->Text);
+		Ar.Log(TEXT("\r\n}\r\n"));
+	}
 
 	// Export default properties that differ from parent's.
 	Ar.Log( TEXT("\r\n\r\ndefaultproperties\r\n{\r\n") );

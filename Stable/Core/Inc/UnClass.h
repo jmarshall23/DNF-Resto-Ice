@@ -250,6 +250,7 @@ class CORE_API UStruct : public UField
 	DWORD				StructFlags; // CDH
 	FName				StructCategory; // CDH: used for named categories for states/functions etc.
 	UTextBuffer*		ScriptText;
+	UTextBuffer*		CppText;
 	UField*				Children;	
     INT					PropertiesSizes[CPD_MAX];
 	FName				FriendlyName;

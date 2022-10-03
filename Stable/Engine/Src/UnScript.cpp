@@ -1377,6 +1377,31 @@ void AActor::execSetTimer( FFrame& Stack, RESULT_DECL )
 		TimerLoop[TimerNum]	= 0;
 }
 
+void AActor::SetCallbackTimer(float NewTimerRate, UBOOL bLoop, FName CallbackName)
+{
+	UFunction* Callback = FindFunction(CallbackName);
+	if (Callback == NULL)
+		return;
+
+	// Look for a timer that matches.
+	for (INT i = 0; i < CallbackTimerPointers.Num(); i++)
+	{
+		if (CallbackTimerPointers(i) == (INT)Callback)
+		{
+			CallbackTimerRates(i) = NewTimerRate;
+			CallbackTimerLoops(i) = (INT)bLoop;
+			CallbackTimerCounters(i) = 0.f;
+			return;
+		}
+	}
+
+	// If no match, create a new timer.
+	CallbackTimerRates.AddItem(NewTimerRate);
+	CallbackTimerLoops.AddItem((INT)bLoop);
+	CallbackTimerPointers.AddItem((INT)Callback);
+	CallbackTimerCounters.AddItem(0.f);
+}
+
 void AActor::execSetCallbackTimer( FFrame& Stack, RESULT_DECL )
 {
 	P_GET_FLOAT(NewTimerRate);
@@ -1384,27 +1409,7 @@ void AActor::execSetCallbackTimer( FFrame& Stack, RESULT_DECL )
 	P_GET_NAME(CallbackName);
 	P_FINISH;
 
-	UFunction* Callback = FindFunction( CallbackName );
-	if ( Callback == NULL )
-		return;
-
-	// Look for a timer that matches.
-	for ( INT i=0; i<CallbackTimerPointers.Num(); i++ )
-	{
-		if ( CallbackTimerPointers(i) == (INT) Callback )
-		{
-			CallbackTimerRates(i) = NewTimerRate;
-			CallbackTimerLoops(i) = (INT) bLoop;
-			CallbackTimerCounters(i) = 0.f;
-			return;
-		}
-	}
-
-	// If no match, create a new timer.
-	CallbackTimerRates.AddItem( NewTimerRate );
-	CallbackTimerLoops.AddItem( (INT) bLoop );
-	CallbackTimerPointers.AddItem( (INT) Callback );
-	CallbackTimerCounters.AddItem( 0.f );
+	SetCallbackTimer(NewTimerRate, bLoop, CallbackName);
 }
 
 void AActor::execEndCallbackTimer( FFrame& Stack, RESULT_DECL )

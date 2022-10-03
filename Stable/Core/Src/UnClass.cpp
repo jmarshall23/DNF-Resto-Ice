@@ -266,6 +266,7 @@ UStruct::UStruct( ENativeConstructor, INT InSize, const TCHAR* InName, const TCH
 :	UField			( EC_NativeConstructor, UClass::StaticClass(), InName, InPackageName, InFlags, InSuperStruct )
 ,	ScriptText		( NULL )
 ,	Children		( NULL )
+,	CppText			(NULL)
 //,	PropertiesSize	( InSize )
 ,	Script			()
 ,	TextPos			( 0 )

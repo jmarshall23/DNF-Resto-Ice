@@ -176,11 +176,30 @@ UObject* UClassFactoryUC::FactoryCreateText
 	}
 
 	// Import the script text.
-	FStringOutputDevice ScriptText, DefaultPropText;
+	FStringOutputDevice ScriptText, DefaultPropText, CppText;
 	while( ParseLine(&Buffer,StrLine,1) )
 	{
 		const TCHAR* Str=*StrLine, *Temp;
-		if( ParseCommand(&Str,TEXT("defaultproperties")) )
+		if (ParseCommand(&Str, TEXT("cpptext")))
+		{
+			ScriptText.Logf(TEXT("// (cpptext)\r\n// (cpptext)\r\n"));
+			ParseLine(&Buffer, StrLine, 1);
+			ParseNext(&Str);
+			Str = *StrLine;
+			if (*Str != '{')
+				appErrorf(TEXT("%s: Missing '{' after cpptext."), *ClassName);
+
+			// Get cpptext.
+			while (ParseLine(&Buffer, StrLine, 1))
+			{
+				ScriptText.Logf(TEXT("// (cpptext)\r\n"));
+				Str = *StrLine;
+				if (*Str == '}')
+					break;
+				CppText.Logf(TEXT("%s\r\n"), *StrLine);
+			}
+		}
+		else if( ParseCommand(&Str,TEXT("defaultproperties")) )
 		{
 			// Get default properties text.
 			while( ParseLine(&Buffer,StrLine,1) )
@@ -256,6 +275,9 @@ UObject* UClassFactoryUC::FactoryCreateText
 	// Set class info.
 	ResultClass->ScriptText      = new( ResultClass, TEXT("ScriptText"),   RF_NotForClient|RF_NotForServer )UTextBuffer( *ScriptText );
 	ResultClass->DefaultPropText = DefaultPropText;
+
+	if (CppText.Len())
+		ResultClass->CppText = new(ResultClass, TEXT("CppText"), RF_NotForClient | RF_NotForServer)UTextBuffer(*CppText);
 
 	return ResultClass;
 }

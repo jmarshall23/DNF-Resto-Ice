@@ -13,6 +13,11 @@ class Actor extends Object
 	native
 	nativereplication;
 
+cpptext
+{
+	void SetCallbackTimer(float NewTimerRate, UBOOL bLoop, FName CallbackName);
+}
+
 // Imported data (during full rebuild).
 #exec Texture Import File=Textures\S_Actor.pcx    Name=S_Actor    Mips=Off Flags=2
 #exec Texture Import File=Textures\S_Obsolete.pcx Name=S_Obsolete Mips=Off Flags=2
