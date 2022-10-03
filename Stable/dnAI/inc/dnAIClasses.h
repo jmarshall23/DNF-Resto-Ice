@@ -504,6 +504,7 @@ public:
     BITFIELD bCanAltFire:1 GCC_PACK(4);
     FLOAT CoverRadius GCC_PACK(4);
     DECLARE_FUNCTION(execEstablishCover);
+    DECLARE_FUNCTION(execEnablePainAnims);
     DECLARE_CLASS(AGrunt,AHumanNPC,0|CLASS_Config)
     NO_DEFAULT_CONSTRUCTOR(AGrunt)
 };
@@ -517,6 +518,7 @@ AUTOGENERATE_FUNCTION(APigCop,-1,execStateSeePlayer);
 AUTOGENERATE_FUNCTION(APigCop,-1,execBeginAI);
 AUTOGENERATE_FUNCTION(AHumanNPC,-1,execTakeDamage);
 AUTOGENERATE_FUNCTION(AGrunt,-1,execEstablishCover);
+AUTOGENERATE_FUNCTION(AGrunt,-1,execEnablePainAnims);
 
 #ifndef NAMES_ONLY
 #undef AUTOGENERATE_NAME

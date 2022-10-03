@@ -7,6 +7,13 @@
 
 IMPLEMENT_CLASS(AGrunt)
 
+void AGrunt::execEnablePainAnims(FFrame& Stack, RESULT_DECL)
+{
+	P_FINISH;
+
+	bAnimatePain = true;
+}
+
 void AGrunt::execEstablishCover(FFrame& Stack, RESULT_DECL)
 {
 	P_FINISH;

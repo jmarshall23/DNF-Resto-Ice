@@ -53,10 +53,7 @@ var float CoverRadius;
 // SetcallBackTimer( time, true/false, function name )
 // EndCallBackTimer()
 
-function EnablePainAnims()
-{
-	bAnimatePain = true;
-}
+native function EnablePainAnims();
 
 function SetAutoFireOn()
 {
