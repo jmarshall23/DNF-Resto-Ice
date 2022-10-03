@@ -1,4 +1,5 @@
-class Grunt extends HumanNPC;
+class Grunt extends HumanNPC
+	native;
 
 #exec OBJ LOAD FILE=..\sounds\dnsweapn.dfx
 var SniperPoint TestDot;
@@ -46,6 +47,8 @@ var pawn OrderTarget;
 var bool bWaitingForOrder;
 var( AI ) name SpecialCoverTag;
 var( AI ) bool bCanAltFire;
+
+var float CoverRadius;
 
 // SetcallBackTimer( time, true/false, function name )
 // EndCallBackTimer()
@@ -187,17 +190,7 @@ simulated function PostBeginPlay()
 	Super.PostBeginPlay();
 }
 
-function EstablishCover()
-{
-	local CoverSpot C;
-
-	foreach radiusactors( class'CoverSpot', C, 64 )
-	{
-		CurrentCoverSpot = C;
-		CurrentCoverSpot.bOccupied = true;
-		break;
-	}
-}
+native function EstablishCover();
 
 function AddWeaponFromFactory( class<weapon> NewWeapon, int PrimaryAmmoCount, int AlternateAmmoCount )
 {
@@ -6722,4 +6715,5 @@ DefaultProperties
     bCanAltFire=true
     bShadowCast=true
 	bShadowReceive=true
+	CoverRadius=64.0
 }

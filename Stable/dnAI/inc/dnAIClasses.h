@@ -20,6 +20,21 @@ AUTOGENERATE_NAME(StopMovingNative)
 
 #if !defined(NAMES_ONLY) || defined(DN_FORCE_NAME_EXPORT)
 
+
+class DNAI_API ACoverSpot : public AInfo
+{
+public:
+    BITFIELD bStrafeCover:1 GCC_PACK(4);
+    BITFIELD bIgnoreCantSee:1;
+    FLOAT MaxCampTime GCC_PACK(4);
+    FName NextLogicalSpotTag;
+    BITFIELD bMustSeeEnemyFrom:1 GCC_PACK(4);
+    BITFIELD bOccupied:1;
+    class APawn* OccupiedBy GCC_PACK(4);
+    DECLARE_CLASS(ACoverSpot,AInfo,0)
+    NO_DEFAULT_CONSTRUCTOR(ACoverSpot)
+};
+
 struct DNAI_API FSNPCAnimEvent
 {
     class USound* EventSound;
@@ -438,14 +453,70 @@ public:
     NO_DEFAULT_CONSTRUCTOR(APigCop)
 };
 
+#define UCONST_MaxCarriedWeapons 8
+#define UCONST_TIMER_Crouch 1
+
+class DNAI_API AGrunt : public AHumanNPC
+{
+public:
+    class ASniperPoint* TestDot;
+    BITFIELD bIsTurning:1 GCC_PACK(4);
+    BITFIELD bAnimatePain:1;
+    class AdnTossedGrenade* MyBomb GCC_PACK(4);
+    FVector RetreatLocation;
+    BITFIELD bGottaReload:1 GCC_PACK(4);
+    class AActor* RetreatDestination GCC_PACK(4);
+    BITFIELD bKneelAtStartup:1 GCC_PACK(4);
+    BITFIELD bRetreatAtStartup:1;
+    BITFIELD bRollLeftOnSpawn:1;
+    BITFIELD bRollRightOnSpawn:1;
+    BITFIELD bStrafeLeftOnSpawn:1;
+    BITFIELD bStrafeRightOnSpawn:1;
+    class AActor* TempEnemy GCC_PACK(4);
+    BITFIELD bContinueFireDisabled:1 GCC_PACK(4);
+    BITFIELD bDodgeSidestepDisabled:1;
+    FVector LastSeenLocation GCC_PACK(4);
+    BITFIELD bCanSayAttackPhrase:1 GCC_PACK(4);
+    FName RetreatTag GCC_PACK(4);
+    FLOAT MaxCoverDistance;
+    FRotator AYaw1;
+    FRotator AYaw2;
+    FName InactiveStance;
+    FName ActiveStance;
+    class ACoverSpot* CurrentCoverSpot;
+    BITFIELD bWaitForOrder:1 GCC_PACK(4);
+    FName InitialCoverTag GCC_PACK(4);
+    BITFIELD bUseInitialCoverTag:1 GCC_PACK(4);
+    BITFIELD bCoverOnAcquisition:1;
+    BITFIELD bOneHandedPistol:1;
+    class AAIFireController* FireController GCC_PACK(4);
+    class AAICoverController* CoverController;
+    class AFocusPoint* TestFocus;
+    class ANavigationPoint* CurrentCrouchNode;
+    BITFIELD bRolling:1 GCC_PACK(4);
+    BITFIELD bIntoCrouch:1;
+    BYTE DodgeLeft GCC_PACK(4);
+    BYTE DodgeRight;
+    FVector TurnDestination;
+    class APawn* OrderTarget;
+    BITFIELD bWaitingForOrder:1 GCC_PACK(4);
+    FName SpecialCoverTag GCC_PACK(4);
+    BITFIELD bCanAltFire:1 GCC_PACK(4);
+    FLOAT CoverRadius GCC_PACK(4);
+    DECLARE_FUNCTION(execEstablishCover);
+    DECLARE_CLASS(AGrunt,AHumanNPC,0|CLASS_Config)
+    NO_DEFAULT_CONSTRUCTOR(AGrunt)
+};
+
 #endif
 
-AUTOGENERATE_FUNCTION(AHumanNPC,-1,execTakeDamage);
 AUTOGENERATE_FUNCTION(APigCop,-1,execStateShootEnemy);
 AUTOGENERATE_FUNCTION(APigCop,-1,execStateApproachingEnemy);
 AUTOGENERATE_FUNCTION(APigCop,-1,execTickAI);
 AUTOGENERATE_FUNCTION(APigCop,-1,execStateSeePlayer);
 AUTOGENERATE_FUNCTION(APigCop,-1,execBeginAI);
+AUTOGENERATE_FUNCTION(AHumanNPC,-1,execTakeDamage);
+AUTOGENERATE_FUNCTION(AGrunt,-1,execEstablishCover);
 
 #ifndef NAMES_ONLY
 #undef AUTOGENERATE_NAME

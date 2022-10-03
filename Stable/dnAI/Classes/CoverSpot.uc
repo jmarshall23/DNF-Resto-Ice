@@ -1,4 +1,5 @@
-class CoverSpot extends Info;
+class CoverSpot extends Info
+    native;
 
 #exec OBJ LOAD FILE=..\Textures\DukeED_Gfx.dtx
 
