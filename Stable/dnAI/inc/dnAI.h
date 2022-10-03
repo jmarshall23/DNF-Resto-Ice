@@ -1,6 +1,12 @@
 // dnAI.h
 //
 
+#include "dnAIClasses.h"
+
+#undef DECLARE_CLASS
+#define DECLARE_CLASS(x, y, z)
+#include "../../dnGame/inc/dnGameClasses.h"
+
 //
 // DnRand 
 // Basically a wrapper for krand from Duke3D.

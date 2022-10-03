@@ -18,7 +18,7 @@
 
 AUTOGENERATE_NAME(Build)
 
-#ifndef NAMES_ONLY
+#if !defined(NAMES_ONLY) || defined(DN_FORCE_NAME_EXPORT)
 
 
 class EDITOR_API UOptionsProxy : public UObject

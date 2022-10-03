@@ -2,9 +2,6 @@
 //
 
 #include <Engine.h>
-#include "dnAI.h"
-
-DnRand dnRand;
 
 #define DN_FORCE_NAME_EXPORT
 

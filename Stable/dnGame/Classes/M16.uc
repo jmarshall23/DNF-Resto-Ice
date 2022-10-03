@@ -2,7 +2,8 @@
 	M-16
 	Author: Brandon Reinhart
 -----------------------------------------------------------------------------*/
-class M16 expands dnWeapon;
+class M16 expands dnWeapon
+	native;
 
 #exec OBJ LOAD FILE=..\Meshes\c_dnWeapon.dmx
 #exec OBJ LOAD FILE=..\Sounds\dnsWeapn.dfx

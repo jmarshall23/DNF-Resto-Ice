@@ -2,6 +2,13 @@ class Grunt extends HumanNPC
 	native;
 
 #exec OBJ LOAD FILE=..\sounds\dnsweapn.dfx
+
+cpptext
+{
+	void EstablishCover(void);
+	void SetAutoFireOn(void);
+}
+
 var SniperPoint TestDot;
 
 var bool bIsTurning;
@@ -54,20 +61,7 @@ var float CoverRadius;
 // EndCallBackTimer()
 
 native function EnablePainAnims();
-
-function SetAutoFireOn()
-{
-	local float i;
-
-	if( Weapon.IsA( 'Pistol' ) )
-		i = 0.5;
-	else if( Weapon.IsA( 'Shotgun' ) )
-		i = 0.15;
-	else if( Weapon.IsA( 'm16' ) )
-		i = 0.15;
-	
-	SetCallBackTimer( i, true, 'AutoFireWeapon' );
-}
+native function SetAutoFireOn();
 
 function SetAutoFireOff()
 {

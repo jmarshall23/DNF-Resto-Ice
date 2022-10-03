@@ -3,7 +3,7 @@
 =============================================================================*/
 #include <Engine.h>
 
-#include "dnAIClasses.h"
+#include "dnAI.h"
 
 IMPLEMENT_CLASS(AHumanNPC)
 

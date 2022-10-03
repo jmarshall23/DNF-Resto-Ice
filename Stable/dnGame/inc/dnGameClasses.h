@@ -52,6 +52,23 @@ public:
 };
 
 
+class DNGAME_API AM16 : public AdnWeapon
+{
+public:
+    FLOAT FireAccuracy;
+    INT BurstCount;
+    FRotator RestRotation;
+    FRotator DesiredViewRotation;
+    FRotator ViewRotationRate;
+    FLOAT LastLookUp;
+    FLOAT LastTurn;
+    BITFIELD RotateToDesiredView:1 GCC_PACK(4);
+    class USound* DryFireSound GCC_PACK(4);
+    DECLARE_CLASS(AM16,AdnWeapon,0)
+    NO_DEFAULT_CONSTRUCTOR(AM16)
+};
+
+
 class DNGAME_API APistol : public AdnWeapon
 {
 public:

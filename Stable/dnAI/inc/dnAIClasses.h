@@ -434,25 +434,6 @@ public:
     NO_DEFAULT_CONSTRUCTOR(AHumanNPC)
 };
 
-
-class DNAI_API APigCop : public AHumanNPC
-{
-public:
-    FName NativeRequestedAnimation;
-    FStringNoInit NativeRequestState;
-    FVector NativeRequestMoveLocation;
-    FVector enemyLastSeenLocation;
-    BITFIELD EnemyIsVisible:1 GCC_PACK(4);
-    INT ApproachState GCC_PACK(4);
-    DECLARE_FUNCTION(execStateShootEnemy);
-    DECLARE_FUNCTION(execStateApproachingEnemy);
-    DECLARE_FUNCTION(execTickAI);
-    DECLARE_FUNCTION(execStateSeePlayer);
-    DECLARE_FUNCTION(execBeginAI);
-    DECLARE_CLASS(APigCop,AHumanNPC,0|CLASS_Config)
-    NO_DEFAULT_CONSTRUCTOR(APigCop)
-};
-
 #define UCONST_MaxCarriedWeapons 8
 #define UCONST_TIMER_Crouch 1
 
@@ -504,21 +485,44 @@ public:
     BITFIELD bCanAltFire:1 GCC_PACK(4);
     FLOAT CoverRadius GCC_PACK(4);
     DECLARE_FUNCTION(execEstablishCover);
+    DECLARE_FUNCTION(execSetAutoFireOn);
     DECLARE_FUNCTION(execEnablePainAnims);
     DECLARE_CLASS(AGrunt,AHumanNPC,0|CLASS_Config)
+	void EstablishCover(void);
+	void SetAutoFireOn(void);
     NO_DEFAULT_CONSTRUCTOR(AGrunt)
+};
+
+
+class DNAI_API APigCop : public AHumanNPC
+{
+public:
+    FName NativeRequestedAnimation;
+    FStringNoInit NativeRequestState;
+    FVector NativeRequestMoveLocation;
+    FVector enemyLastSeenLocation;
+    BITFIELD EnemyIsVisible:1 GCC_PACK(4);
+    INT ApproachState GCC_PACK(4);
+    DECLARE_FUNCTION(execStateShootEnemy);
+    DECLARE_FUNCTION(execStateApproachingEnemy);
+    DECLARE_FUNCTION(execTickAI);
+    DECLARE_FUNCTION(execStateSeePlayer);
+    DECLARE_FUNCTION(execBeginAI);
+    DECLARE_CLASS(APigCop,AHumanNPC,0|CLASS_Config)
+    NO_DEFAULT_CONSTRUCTOR(APigCop)
 };
 
 #endif
 
+AUTOGENERATE_FUNCTION(AHumanNPC,-1,execTakeDamage);
+AUTOGENERATE_FUNCTION(AGrunt,-1,execEstablishCover);
+AUTOGENERATE_FUNCTION(AGrunt,-1,execSetAutoFireOn);
+AUTOGENERATE_FUNCTION(AGrunt,-1,execEnablePainAnims);
 AUTOGENERATE_FUNCTION(APigCop,-1,execStateShootEnemy);
 AUTOGENERATE_FUNCTION(APigCop,-1,execStateApproachingEnemy);
 AUTOGENERATE_FUNCTION(APigCop,-1,execTickAI);
 AUTOGENERATE_FUNCTION(APigCop,-1,execStateSeePlayer);
 AUTOGENERATE_FUNCTION(APigCop,-1,execBeginAI);
-AUTOGENERATE_FUNCTION(AHumanNPC,-1,execTakeDamage);
-AUTOGENERATE_FUNCTION(AGrunt,-1,execEstablishCover);
-AUTOGENERATE_FUNCTION(AGrunt,-1,execEnablePainAnims);
 
 #ifndef NAMES_ONLY
 #undef AUTOGENERATE_NAME
