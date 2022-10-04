@@ -136,3 +136,26 @@ bool AGrunt::CanFireAtEnemy(void)
 
 	return true;
 }
+
+bool AGrunt::CanUseWeapon(AWeapon *w)
+{
+	bool bNoAmmo, bNoAltAmmo;
+
+	if (w == nullptr)
+	{
+		return(false);
+	}
+
+	if (Weapon != nullptr)
+	{
+		if (bArmless && !Weapon->IsA(APistol::StaticClass()))
+			return false;
+	}
+
+	bNoAmmo = (w->AmmoName != nullptr);
+	if (bNoAmmo && (w->AmmoType->eventGetModeAmmoEvent() > 0))
+		bNoAmmo = false;
+	if (bNoAmmo)// && bNoAltAmmo)
+		return(false);
+	return(true);
+}

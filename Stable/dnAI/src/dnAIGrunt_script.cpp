@@ -49,3 +49,11 @@ void AGrunt::execEstablishCover(FFrame& Stack, RESULT_DECL)
 	P_FINISH;
 	EstablishCover();
 }
+
+void AGrunt::execCanUseWeapon(FFrame& Stack, RESULT_DECL)
+{
+	P_GET_OBJECT(AWeapon, w)
+	P_FINISH;
+
+	*(DWORD*)Result = CanUseWeapon(w);
+}

@@ -3592,10 +3592,15 @@ INT FScriptCompiler::CompileDeclaration( FToken& Token, UBOOL& NeedSemicolon )
 		{
 			// Set the superclass.
 			UClass* TempClass = GetQualifiedClass( TEXT("'expands'") );
-			if( Class->GetSuperClass() == NULL )
+			if (Class->GetSuperClass() == NULL)
+			{
 				Class->SuperField = TempClass;
-			else if( Class->GetSuperClass() != TempClass )
-				appThrowf( TEXT("%s's superclass must be %s, not %s"), Class->GetPathName(), Class->GetSuperClass()->GetPathName(), TempClass->GetPathName() );
+			}
+			else if (Class->GetSuperClass() != TempClass)
+			{
+				Class->SuperField = TempClass;
+				//appThrowf( TEXT("%s's superclass must be %s, not %s"), Class->GetPathName(), Class->GetSuperClass()->GetPathName(), TempClass->GetPathName() );
+			}
 		}
 		else if( Class->GetSuperClass() )
 			appThrowf( TEXT("class: missing 'Expands %s'"), Class->GetSuperClass()->GetName() );

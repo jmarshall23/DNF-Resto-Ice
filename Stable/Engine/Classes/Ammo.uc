@@ -169,6 +169,11 @@ simulated function int GetModeAmmo()
 	return ModeAmount[AmmoMode];
 }
 
+simulated event int GetModeAmmoEvent()
+{
+	return GetModeAmmo();
+}
+
 // Set the current mode's ammo amount.
 function SetModeAmmo(int Amount)
 {

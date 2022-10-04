@@ -15,6 +15,8 @@ cpptext
 	void PlayWeaponFire( float TweenTime = 0.0f );
 
 	bool CanFireAtEnemy(void);
+
+	bool CanUseWeapon(AWeapon *w);
 }
 
 var SniperPoint TestDot;
@@ -339,22 +341,7 @@ function bool SwitchToWeapon(Weapon w)
 	return false;
 }
 
-function bool CanUseWeapon(Weapon w)
-{
-	local bool bNoAmmo, bNoAltAmmo;
-
-	if (w==None)
-		return(false);
-	if( bArmless && !Weapon.IsA( 'Pistol' ) )
-		return false;
-	
-	bNoAmmo = (w.AmmoName!=None);
-	if( bNoAmmo && ( w.AmmoType.GetModeAmmo() > 0 ) )
-		bNoAmmo = false;
-	if( bNoAmmo )// && bNoAltAmmo)
-		return( false );
-	return( true );
-}
+native function bool CanUseWeapon(Weapon w);
 
 function Weapon ChooseBestWeapon()
 {

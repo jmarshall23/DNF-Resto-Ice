@@ -517,6 +517,7 @@ public:
     FLOAT CoverRadius GCC_PACK(4);
     DECLARE_FUNCTION(execPlayWeaponFire);
     DECLARE_FUNCTION(execCanFireAtEnemy);
+    DECLARE_FUNCTION(execCanUseWeapon);
     DECLARE_FUNCTION(execEstablishCover);
     DECLARE_FUNCTION(execAutoFireWeapon);
     DECLARE_FUNCTION(execSetAutoFireOff);
@@ -544,6 +545,8 @@ public:
 	void PlayWeaponFire( float TweenTime = 0.0f );
 
 	bool CanFireAtEnemy(void);
+
+	bool CanUseWeapon(AWeapon *w);
     NO_DEFAULT_CONSTRUCTOR(AGrunt)
 };
 
@@ -571,6 +574,7 @@ AUTOGENERATE_FUNCTION(AHumanNPC,-1,execAttitudeTo);
 AUTOGENERATE_FUNCTION(AHumanNPC,-1,execTakeDamage);
 AUTOGENERATE_FUNCTION(AGrunt,-1,execPlayWeaponFire);
 AUTOGENERATE_FUNCTION(AGrunt,-1,execCanFireAtEnemy);
+AUTOGENERATE_FUNCTION(AGrunt,-1,execCanUseWeapon);
 AUTOGENERATE_FUNCTION(AGrunt,-1,execEstablishCover);
 AUTOGENERATE_FUNCTION(AGrunt,-1,execAutoFireWeapon);
 AUTOGENERATE_FUNCTION(AGrunt,-1,execSetAutoFireOff);
