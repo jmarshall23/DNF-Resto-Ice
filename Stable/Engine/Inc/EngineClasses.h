@@ -168,6 +168,10 @@ AUTOGENERATE_NAME(StoppedRolling)
 AUTOGENERATE_NAME(TakeDamageEvent)
 AUTOGENERATE_NAME(AddDefaultInventoryBase)
 AUTOGENERATE_NAME(GiveWeaponTo)
+AUTOGENERATE_NAME(CanFire)
+AUTOGENERATE_NAME(GottaReload)
+AUTOGENERATE_NAME(AddAmmo)
+AUTOGENERATE_NAME(FireNative)
 
 #if !defined(NAMES_ONLY) || defined(DN_FORCE_NAME_EXPORT)
 
@@ -5281,6 +5285,17 @@ struct ENGINE_API FWAMEntry
 };
 
 
+struct AWeapon_eventFireNative_Parms
+{
+};
+struct AWeapon_eventGottaReload_Parms
+{
+    BITFIELD ReturnValue;
+};
+struct AWeapon_eventCanFire_Parms
+{
+    BITFIELD ReturnValue;
+};
 struct AWeapon_eventPostRender_Parms
 {
     class UCanvas* Canvas;
@@ -5434,6 +5449,24 @@ public:
     BITFIELD bAltFireIgnites:1;
     class ABeamAnchor* MuzzleAnchor GCC_PACK(4);
     BITFIELD bUseMuzzleAnchor:1 GCC_PACK(4);
+    inline void __fastcall eventFireNative()
+    {
+        ProcessEvent(FindFunctionChecked(ENGINE_FireNative),NULL);
+    }
+    inline BITFIELD __fastcall eventGottaReload()
+    {
+        AWeapon_eventGottaReload_Parms Parms;
+        Parms.ReturnValue=0;
+        ProcessEvent(FindFunctionChecked(ENGINE_GottaReload),&Parms);
+        return Parms.ReturnValue;
+    }
+    inline BITFIELD __fastcall eventCanFire()
+    {
+        AWeapon_eventCanFire_Parms Parms;
+        Parms.ReturnValue=0;
+        ProcessEvent(FindFunctionChecked(ENGINE_CanFire),&Parms);
+        return Parms.ReturnValue;
+    }
     inline void __fastcall eventPostRender(class UCanvas* Canvas)
     {
         AWeapon_eventPostRender_Parms Parms;
@@ -5442,6 +5475,38 @@ public:
     }
     DECLARE_CLASS(AWeapon,AInventory,0)
     NO_DEFAULT_CONSTRUCTOR(AWeapon)
+};
+
+
+struct AAmmo_eventAddAmmo_Parms
+{
+    INT AmmoToAdd;
+    INT ModeToAdd;
+    BITFIELD ReturnValue;
+};
+class ENGINE_API AAmmo : public AInventory
+{
+public:
+    INT MaxAmmoMode;
+    INT AmmoType;
+    INT AmmoMode;
+    INT ModeAmount[4];
+    INT MaxAmmo[4];
+    class UClass* ParentAmmo;
+    FLOAT ModeDamageMultiplier[4];
+    FLOAT ModeAccuracyModifier[4];
+    INT CanPierceArmor[4];
+    inline BITFIELD __fastcall eventAddAmmo(INT AmmoToAdd, INT ModeToAdd)
+    {
+        AAmmo_eventAddAmmo_Parms Parms;
+        Parms.ReturnValue=0;
+        Parms.AmmoToAdd=AmmoToAdd;
+        Parms.ModeToAdd=ModeToAdd;
+        ProcessEvent(FindFunctionChecked(ENGINE_AddAmmo),&Parms);
+        return Parms.ReturnValue;
+    }
+    DECLARE_CLASS(AAmmo,AInventory,0)
+    NO_DEFAULT_CONSTRUCTOR(AAmmo)
 };
 
 

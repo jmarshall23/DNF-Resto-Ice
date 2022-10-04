@@ -14,7 +14,7 @@ var() float MeleeHitRadius;
 
 
 // Never have to reload a melee weapon.
-simulated function bool GottaReload() { return false; }
+simulated event bool GottaReload() { return false; }
 
 // Returns damage for this hit.
 simulated function int GetHitDamage(actor Victim, name BoneName)

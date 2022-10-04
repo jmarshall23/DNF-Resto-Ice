@@ -3,6 +3,7 @@
 	Author: Brandon Reinhart
 -----------------------------------------------------------------------------*/
 class Ammo extends Inventory
+	native
 	abstract;
 
 #exec Texture Import File=Textures\Ammo.pcx Name=S_Ammo Mips=Off Flags=2
@@ -123,7 +124,7 @@ function bool UseAmmo(int AmountNeeded)
 
 // If we can, add ammo and return true.  
 // We we are at max ammo, return false
-function bool AddAmmo( int AmmoToAdd, int ModeToAdd )
+simulated event bool AddAmmo( int AmmoToAdd, int ModeToAdd )
 {
 	if ( ModeAmount[ModeToAdd] >= MaxAmmo[ModeToAdd] )
 		return false;

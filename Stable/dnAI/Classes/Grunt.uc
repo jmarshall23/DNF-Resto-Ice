@@ -9,6 +9,10 @@ cpptext
 
 	void SetAutoFireOn(void);
 	void SetAutoFireOff(void);
+
+	void AutoFireWeapon(void);
+
+	void PlayWeaponFire( float TweenTime = 0.0f );
 }
 
 var SniperPoint TestDot;
@@ -67,22 +71,8 @@ native function SetAutoFireOn();
 
 native function SetAutoFireOff();
 
-function AutoFireWeapon()
-{
-	// FIXME: Auto reload weapon (temporary).
-	if( Weapon.GottaReload() )
-	{
-		dnWeapon( Weapon ).AmmoType.AddAmmo( 9999, 0 );
-		if( Weapon.IsA( 'Pistol' ) )
-			Weapon.AmmoLoaded = 8;
-		else
-			Weapon.AmmoLoaded = 50;
-	}
-	bFire = 1;
-	dnWeapon( Weapon ).FireAnim.AnimTween = 0.1;
-	PlayWeaponFire();
-	Weapon.Fire();
-}
+native function AutoFireWeapon();
+
 
 simulated function PostBeginPlay()
 {
@@ -1050,18 +1040,7 @@ function PlayToWaiting( optional float TweenTime )
 		PlayTopAnim( 'T_ShieldIdle',, TweenTime, true );
 }
 
-function PlayWeaponFire( optional float TweenTime )
-{
-	if( TweenTime == 0.0 )
-		TweenTime = 0.1;
-
-	if( Weapon.IsA( 'm16' ) )
-		PlayTopAnim( 'T_M16Fire', 6.0, TweenTime, false, false, true );
-	else if( Weapon.IsA( 'Shotgun' ) )
-		PlayTopAnim( 'T_SGFire',, TweenTime, false, false, false );
-	else if( Weapon.IsA( 'Pistol' ) )
-		PlayTopAnim( 'T_Pistol2HandFire',, TweenTime, false, false, true );
-}
+native function PlayWeaponFire( optional float TweenTime );
 
 function PlayWeaponIdle( optional float TweenTime )
 {
@@ -6313,6 +6292,10 @@ function PlayBottomAnim(name Sequence, optional float Rate, optional float Tween
 		PlayAnim(Sequence, Rate, TweenTime, 2);
 }
 
+simulated event PlayAnimEvent(name Sequence, float Rate, float TweenTime, bool bLooping, bool bNoCallAnimEx, bool bCanInterrupt )
+{
+	PlayTopAnim(Sequence, Rate, TweenTime, bLooping, bNoCallAnimEx, bCanInterrupt);
+}
 
 function PlayTopAnim(name Sequence, optional float Rate, optional float TweenTime, optional bool bLooping, optional bool bNoCallAnimEx, optional bool bCanInterrupt )
 {

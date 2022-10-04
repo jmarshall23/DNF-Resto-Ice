@@ -7,7 +7,7 @@
 
 // Register things.
 #define NAMES_ONLY
-#define AUTOGENERATE_NAME(name) DNAI_API FName DNAI_##name;
+#define AUTOGENERATE_NAME(name) DNAI_API FName DNAI_##name = TEXT(#name);
 #define AUTOGENERATE_FUNCTION(cls,idx,name) IMPLEMENT_FUNCTION(cls,idx,name)
 #include "dnAIClasses.h"
 #undef AUTOGENERATE_FUNCTION

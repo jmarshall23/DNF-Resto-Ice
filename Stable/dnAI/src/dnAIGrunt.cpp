@@ -57,31 +57,50 @@ void AGrunt::SetAutoFireOn(void)
 	SetCallbackTimer(i, true, TEXT("AutoFireWeapon"));
 }
 
+void AGrunt::PlayWeaponFire(float TweenTime)
+{
+	if (TweenTime == 0.0)
+		TweenTime = 0.1;
+
+	if (Weapon == nullptr)
+		return;
+
+	if (Weapon->IsA(AM16::StaticClass()))
+		eventPlayAnimEvent(TEXT("T_M16Fire"), 6.0, TweenTime, false, false, true);
+	else if (Weapon->IsA(AShotgun::StaticClass()))
+		eventPlayAnimEvent(TEXT("T_SGFire"), 0.0f, TweenTime, false, false, false);
+	else if (Weapon->IsA(APistol::StaticClass()))
+		eventPlayAnimEvent(TEXT("T_Pistol2HandFire"), 0.0f, TweenTime, false, false, true);
+}
+
+void AGrunt::AutoFireWeapon(void)
+{
+	if (Weapon == NULL)
+		return;
+
+	AdnWeapon* dnWeapon = (AdnWeapon*)Weapon;
+
+	if (dnWeapon->eventGottaReload())
+	{		
+		dnWeapon->AmmoType->eventAddAmmo(9999, 0);
+
+		if (dnWeapon->IsA(APistol::StaticClass()))
+		{
+			dnWeapon->AmmoLoaded = 8;
+		}
+		else
+		{
+			dnWeapon->AmmoLoaded = 50;
+		}
+	}
+
+	bFire = true;
+	dnWeapon->FireAnim.AnimTween = 0.1f;
+	PlayWeaponFire();
+	Weapon->eventFireNative();
+}
+
 void AGrunt::SetAutoFireOff(void)
 {
 	EndCallbackTimer(TEXT("AutoFireWeapon"));
-}
-
-void AGrunt::execSetAutoFireOn(FFrame& Stack, RESULT_DECL)
-{
-	P_FINISH;
-	SetAutoFireOn();
-}
-
-void AGrunt::execSetAutoFireOff(FFrame& Stack, RESULT_DECL)
-{
-	P_FINISH;
-	SetAutoFireOff();
-}
-
-void AGrunt::execEnablePainAnims(FFrame& Stack, RESULT_DECL)
-{
-	P_FINISH;
-	bAnimatePain = true;
-}
-
-void AGrunt::execEstablishCover(FFrame& Stack, RESULT_DECL)
-{
-	P_FINISH;
-	EstablishCover();
 }

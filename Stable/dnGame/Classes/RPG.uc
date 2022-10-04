@@ -152,7 +152,7 @@ simulated function CycleAmmoMode( optional bool bFast )
 -----------------------------------------------------------------------------*/
 
 // We return false, because the RPG never reloads.  Reloading is a part of firing.
-simulated function bool GottaReload()
+simulated event bool GottaReload()
 {
 	return false;
 }

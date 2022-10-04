@@ -497,7 +497,7 @@ simulated function IncrementZoom()
 
 // Returns true if we have ammo for the current mode, don't have to reload, 
 // and aren't completely out of ammo.
-simulated function bool CanFire()
+simulated event bool CanFire()
 {
 	// Can't fire if we need to charge or are charging.
 	if ( bNeedToCharge || bCharging )

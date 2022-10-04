@@ -1050,7 +1050,7 @@ simulated function float SwitchPriority()
 
 // Returns true if we have ammo for the current mode, don't have to reload, 
 // and aren't completely out of ammo.
-simulated function bool CanFire()
+simulated event bool CanFire()
 {
 	return ( HaveModeAmmo() && !GottaReload() && !OutOfAmmo() );
 }
@@ -1065,7 +1065,7 @@ simulated function bool HaveModeAmmo()
 }
 
 // Returns true if we have to reload the weapon.
-simulated function bool GottaReload()
+simulated event bool GottaReload()
 {
 	// Never have to reload if we don't use ammo.
 	if ( AmmoType == None )
@@ -1181,6 +1181,11 @@ simulated function bool ClientFire()
 		return true;
 	}
 	return false;
+}
+
+event FireNative()
+{
+	Fire();
 }
 
 // Perform firing.

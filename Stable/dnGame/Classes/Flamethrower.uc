@@ -226,12 +226,10 @@ function Fire()
 }
 
 // This weapon never plays a reload anim, we draw ammo from a tank.
-simulated function bool GottaReload()
+simulated event bool GottaReload()
 {
 	return false;
 }
-
-
 
 /*-----------------------------------------------------------------------------
 	Weapon Effects

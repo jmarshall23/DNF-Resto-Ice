@@ -16,6 +16,7 @@
 #define AUTOGENERATE_FUNCTION(cls,idx,name)
 #endif
 
+AUTOGENERATE_NAME(PlayAnimEvent)
 AUTOGENERATE_NAME(StopMovingNative)
 
 #if !defined(NAMES_ONLY) || defined(DN_FORCE_NAME_EXPORT)
@@ -456,6 +457,15 @@ public:
 #define UCONST_MaxCarriedWeapons 8
 #define UCONST_TIMER_Crouch 1
 
+struct AGrunt_eventPlayAnimEvent_Parms
+{
+    FName Sequence;
+    FLOAT Rate;
+    FLOAT TweenTime;
+    BITFIELD bLooping;
+    BITFIELD bNoCallAnimEx;
+    BITFIELD bCanInterrupt;
+};
 class DNAI_API AGrunt : public AHumanNPC
 {
 public:
@@ -503,15 +513,32 @@ public:
     FName SpecialCoverTag GCC_PACK(4);
     BITFIELD bCanAltFire:1 GCC_PACK(4);
     FLOAT CoverRadius GCC_PACK(4);
+    DECLARE_FUNCTION(execPlayWeaponFire);
     DECLARE_FUNCTION(execEstablishCover);
+    DECLARE_FUNCTION(execAutoFireWeapon);
     DECLARE_FUNCTION(execSetAutoFireOff);
     DECLARE_FUNCTION(execSetAutoFireOn);
     DECLARE_FUNCTION(execEnablePainAnims);
+    inline void __fastcall eventPlayAnimEvent(FName Sequence, FLOAT Rate, FLOAT TweenTime, BITFIELD bLooping, BITFIELD bNoCallAnimEx, BITFIELD bCanInterrupt)
+    {
+        AGrunt_eventPlayAnimEvent_Parms Parms;
+        Parms.Sequence=Sequence;
+        Parms.Rate=Rate;
+        Parms.TweenTime=TweenTime;
+        Parms.bLooping=bLooping;
+        Parms.bNoCallAnimEx=bNoCallAnimEx;
+        Parms.bCanInterrupt=bCanInterrupt;
+        ProcessEvent(FindFunctionChecked(DNAI_PlayAnimEvent),&Parms);
+    }
     DECLARE_CLASS(AGrunt,AHumanNPC,0|CLASS_Config)
 	void EstablishCover(void);
 
 	void SetAutoFireOn(void);
 	void SetAutoFireOff(void);
+
+	void AutoFireWeapon(void);
+
+	void PlayWeaponFire( float TweenTime = 0.0f );
     NO_DEFAULT_CONSTRUCTOR(AGrunt)
 };
 
@@ -523,7 +550,9 @@ AUTOGENERATE_FUNCTION(APigCop,-1,execTickAI);
 AUTOGENERATE_FUNCTION(APigCop,-1,execStateSeePlayer);
 AUTOGENERATE_FUNCTION(APigCop,-1,execBeginAI);
 AUTOGENERATE_FUNCTION(AHumanNPC,-1,execTakeDamage);
+AUTOGENERATE_FUNCTION(AGrunt,-1,execPlayWeaponFire);
 AUTOGENERATE_FUNCTION(AGrunt,-1,execEstablishCover);
+AUTOGENERATE_FUNCTION(AGrunt,-1,execAutoFireWeapon);
 AUTOGENERATE_FUNCTION(AGrunt,-1,execSetAutoFireOff);
 AUTOGENERATE_FUNCTION(AGrunt,-1,execSetAutoFireOn);
 AUTOGENERATE_FUNCTION(AGrunt,-1,execEnablePainAnims);

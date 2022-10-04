@@ -7,7 +7,7 @@
 
 // Register things.
 #define NAMES_ONLY
-#define AUTOGENERATE_NAME(name) EDITOR_API FName DNGAME_##name;
+#define AUTOGENERATE_NAME(name) EDITOR_API FName DNGAME_##name = #name;
 #define AUTOGENERATE_FUNCTION(cls,idx,name) IMPLEMENT_FUNCTION(cls,idx,name)
 #include "dnGameClasses.h"
 #undef AUTOGENERATE_FUNCTION

@@ -167,7 +167,7 @@ function PlaceMine( rotator ClientViewRotation )
 -----------------------------------------------------------------------------*/
 
 // We return false, because the TripMine never reloads.  Reloading is a part of firing.
-simulated function bool GottaReload()
+simulated event bool GottaReload()
 {
 	return false;
 }

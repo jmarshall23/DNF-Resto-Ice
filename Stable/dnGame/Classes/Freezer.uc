@@ -73,7 +73,7 @@ function AltFire()
 }
 
 // Returns true if we have to reload the weapon.
-simulated function bool GottaReload()
+simulated event bool GottaReload()
 {
 	// Never have to reload if we don't use ammo.
 	if ( AmmoType == None )
