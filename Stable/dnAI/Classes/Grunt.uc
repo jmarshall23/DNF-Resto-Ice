@@ -5,20 +5,20 @@ class Grunt extends HumanNPC
 
 cpptext
 {
-	void EstablishCover(void);
+	virtual void EstablishCover(void);
 
-	void SetAutoFireOn(void);
-	void SetAutoFireOff(void);
+	virtual void SetAutoFireOn(void);
+	virtual void SetAutoFireOff(void);
 
-	void AutoFireWeapon(void);
+	virtual void AutoFireWeapon(void);
 
-	void PlayWeaponFire( float TweenTime = 0.0f );
+	virtual void PlayWeaponFire( float TweenTime = 0.0f );
 
-	bool CanFireAtEnemy(void);
+	virtual bool CanFireAtEnemy(void);
 
-	bool CanUseWeapon(AWeapon *w);
+	virtual bool CanUseWeapon(AWeapon *w);
 
-	void FireWeapon(void);
+	virtual void FireWeapon(void);
 }
 
 var SniperPoint TestDot;
