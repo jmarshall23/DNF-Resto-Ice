@@ -516,6 +516,7 @@ public:
     BITFIELD bCanAltFire:1 GCC_PACK(4);
     FLOAT CoverRadius GCC_PACK(4);
     DECLARE_FUNCTION(execPlayWeaponFire);
+    DECLARE_FUNCTION(execFireWeapon);
     DECLARE_FUNCTION(execCanFireAtEnemy);
     DECLARE_FUNCTION(execCanUseWeapon);
     DECLARE_FUNCTION(execEstablishCover);
@@ -547,6 +548,8 @@ public:
 	bool CanFireAtEnemy(void);
 
 	bool CanUseWeapon(AWeapon *w);
+
+	void FireWeapon(void);
     NO_DEFAULT_CONSTRUCTOR(AGrunt)
 };
 
@@ -573,6 +576,7 @@ AUTOGENERATE_FUNCTION(APigCop,-1,execBeginAI);
 AUTOGENERATE_FUNCTION(AHumanNPC,-1,execAttitudeTo);
 AUTOGENERATE_FUNCTION(AHumanNPC,-1,execTakeDamage);
 AUTOGENERATE_FUNCTION(AGrunt,-1,execPlayWeaponFire);
+AUTOGENERATE_FUNCTION(AGrunt,-1,execFireWeapon);
 AUTOGENERATE_FUNCTION(AGrunt,-1,execCanFireAtEnemy);
 AUTOGENERATE_FUNCTION(AGrunt,-1,execCanUseWeapon);
 AUTOGENERATE_FUNCTION(AGrunt,-1,execEstablishCover);

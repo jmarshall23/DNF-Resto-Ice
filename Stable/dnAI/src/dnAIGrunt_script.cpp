@@ -57,3 +57,10 @@ void AGrunt::execCanUseWeapon(FFrame& Stack, RESULT_DECL)
 
 	*(DWORD*)Result = CanUseWeapon(w);
 }
+
+void AGrunt::execFireWeapon(FFrame& Stack, RESULT_DECL)
+{
+	P_FINISH;
+
+	FireWeapon();
+}

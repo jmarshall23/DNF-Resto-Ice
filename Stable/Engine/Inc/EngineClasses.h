@@ -1733,6 +1733,7 @@ public:
         }
     }
     DECLARE_CLASS(AActor,UObject,0|CLASS_NativeReplication)
+	void MakeNoise(float Loudness);
 	void SetCallbackTimer(float NewTimerRate, UBOOL bLoop, FName CallbackName);
 	void EndCallbackTimer(FName CallbackName);
 	AActor *Trace(const FVector& TraceEnd, const FVector& TraceStart, bool bTraceActors, FVector *HitLocation = nullptr, FVector *HitNormal = nullptr, const FVector *Extent = nullptr, bool bMeshAccurate = false, int *HitMeshTri = nullptr, FVector *HitMeshBarys = nullptr, FName *HitMeshBone = nullptr, UTexture **HitMeshTexture = nullptr, FVector *HitUV = nullptr);
@@ -1814,58 +1815,6 @@ public:
     }
     DECLARE_CLASS(AInternetLink,AInternetInfo,0|CLASS_Transient)
     #include "AInternetLink.h"
-};
-
-
-struct AUdpLink_eventReceivedBinary_Parms
-{
-    FIpAddr Addr;
-    INT Count;
-    BYTE B[255];
-};
-struct AUdpLink_eventReceivedLine_Parms
-{
-    FIpAddr Addr;
-    FString Line;
-};
-struct AUdpLink_eventReceivedText_Parms
-{
-    FIpAddr Addr;
-    FString Text;
-};
-class ENGINE_API AUdpLink : public AInternetLink
-{
-public:
-    INT BroadcastAddr;
-    DECLARE_FUNCTION(execReadBinary);
-    DECLARE_FUNCTION(execReadText);
-    DECLARE_FUNCTION(execSendBinary);
-    DECLARE_FUNCTION(execSendText);
-    DECLARE_FUNCTION(execBindPort);
-    inline void __fastcall eventReceivedBinary(FIpAddr Addr, INT Count, BYTE* B)
-    {
-        AUdpLink_eventReceivedBinary_Parms Parms;
-        Parms.Addr=Addr;
-        Parms.Count=Count;
-        appMemcpy(&Parms.B,&B,sizeof(Parms.B));
-        ProcessEvent(FindFunctionChecked(ENGINE_ReceivedBinary),&Parms);
-    }
-    inline void __fastcall eventReceivedLine(FIpAddr Addr, const FString& Line)
-    {
-        AUdpLink_eventReceivedLine_Parms Parms;
-        Parms.Addr=Addr;
-        Parms.Line=Line;
-        ProcessEvent(FindFunctionChecked(ENGINE_ReceivedLine),&Parms);
-    }
-    inline void __fastcall eventReceivedText(FIpAddr Addr, const FString& Text)
-    {
-        AUdpLink_eventReceivedText_Parms Parms;
-        Parms.Addr=Addr;
-        Parms.Text=Text;
-        ProcessEvent(FindFunctionChecked(ENGINE_ReceivedText),&Parms);
-    }
-    DECLARE_CLASS(AUdpLink,AInternetLink,0|CLASS_Transient)
-    #include "AUdpLink.h"
 };
 
 enum ELinkState
@@ -1953,6 +1902,58 @@ public:
     }
     DECLARE_CLASS(ATcpLink,AInternetLink,0|CLASS_Transient)
     #include "ATcpLink.h"
+};
+
+
+struct AUdpLink_eventReceivedBinary_Parms
+{
+    FIpAddr Addr;
+    INT Count;
+    BYTE B[255];
+};
+struct AUdpLink_eventReceivedLine_Parms
+{
+    FIpAddr Addr;
+    FString Line;
+};
+struct AUdpLink_eventReceivedText_Parms
+{
+    FIpAddr Addr;
+    FString Text;
+};
+class ENGINE_API AUdpLink : public AInternetLink
+{
+public:
+    INT BroadcastAddr;
+    DECLARE_FUNCTION(execReadBinary);
+    DECLARE_FUNCTION(execReadText);
+    DECLARE_FUNCTION(execSendBinary);
+    DECLARE_FUNCTION(execSendText);
+    DECLARE_FUNCTION(execBindPort);
+    inline void __fastcall eventReceivedBinary(FIpAddr Addr, INT Count, BYTE* B)
+    {
+        AUdpLink_eventReceivedBinary_Parms Parms;
+        Parms.Addr=Addr;
+        Parms.Count=Count;
+        appMemcpy(&Parms.B,&B,sizeof(Parms.B));
+        ProcessEvent(FindFunctionChecked(ENGINE_ReceivedBinary),&Parms);
+    }
+    inline void __fastcall eventReceivedLine(FIpAddr Addr, const FString& Line)
+    {
+        AUdpLink_eventReceivedLine_Parms Parms;
+        Parms.Addr=Addr;
+        Parms.Line=Line;
+        ProcessEvent(FindFunctionChecked(ENGINE_ReceivedLine),&Parms);
+    }
+    inline void __fastcall eventReceivedText(FIpAddr Addr, const FString& Text)
+    {
+        AUdpLink_eventReceivedText_Parms Parms;
+        Parms.Addr=Addr;
+        Parms.Text=Text;
+        ProcessEvent(FindFunctionChecked(ENGINE_ReceivedText),&Parms);
+    }
+    DECLARE_CLASS(AUdpLink,AInternetLink,0|CLASS_Transient)
+    #include "AUdpLink.h"
 };
 
 struct ENGINE_API FMapInfoData
@@ -6102,11 +6103,15 @@ public:
 
 #endif
 
-AUTOGENERATE_FUNCTION(AUdpLink,-1,execReadBinary);
-AUTOGENERATE_FUNCTION(AUdpLink,-1,execReadText);
-AUTOGENERATE_FUNCTION(AUdpLink,-1,execSendBinary);
-AUTOGENERATE_FUNCTION(AUdpLink,-1,execSendText);
-AUTOGENERATE_FUNCTION(AUdpLink,-1,execBindPort);
+AUTOGENERATE_FUNCTION(ATcpLink,-1,execReadBinary);
+AUTOGENERATE_FUNCTION(ATcpLink,-1,execReadText);
+AUTOGENERATE_FUNCTION(ATcpLink,-1,execSendBinary);
+AUTOGENERATE_FUNCTION(ATcpLink,-1,execSendText);
+AUTOGENERATE_FUNCTION(ATcpLink,-1,execIsConnected);
+AUTOGENERATE_FUNCTION(ATcpLink,-1,execClose);
+AUTOGENERATE_FUNCTION(ATcpLink,-1,execOpen);
+AUTOGENERATE_FUNCTION(ATcpLink,-1,execListen);
+AUTOGENERATE_FUNCTION(ATcpLink,-1,execBindPort);
 AUTOGENERATE_FUNCTION(AInternetLink,-1,execGetLocalIP);
 AUTOGENERATE_FUNCTION(AInternetLink,-1,execValidate);
 AUTOGENERATE_FUNCTION(AInternetLink,-1,execStringToIpAddr);
@@ -6220,15 +6225,11 @@ AUTOGENERATE_FUNCTION(AActor,-1,execEnumSurfsInRadius);
 AUTOGENERATE_FUNCTION(AActor,-1,execNameForString);
 AUTOGENERATE_FUNCTION(AActor,-1,execMusicPlay);
 AUTOGENERATE_FUNCTION(AActor,-1,execConsoleCommand);
-AUTOGENERATE_FUNCTION(ATcpLink,-1,execReadBinary);
-AUTOGENERATE_FUNCTION(ATcpLink,-1,execReadText);
-AUTOGENERATE_FUNCTION(ATcpLink,-1,execSendBinary);
-AUTOGENERATE_FUNCTION(ATcpLink,-1,execSendText);
-AUTOGENERATE_FUNCTION(ATcpLink,-1,execIsConnected);
-AUTOGENERATE_FUNCTION(ATcpLink,-1,execClose);
-AUTOGENERATE_FUNCTION(ATcpLink,-1,execOpen);
-AUTOGENERATE_FUNCTION(ATcpLink,-1,execListen);
-AUTOGENERATE_FUNCTION(ATcpLink,-1,execBindPort);
+AUTOGENERATE_FUNCTION(AUdpLink,-1,execReadBinary);
+AUTOGENERATE_FUNCTION(AUdpLink,-1,execReadText);
+AUTOGENERATE_FUNCTION(AUdpLink,-1,execSendBinary);
+AUTOGENERATE_FUNCTION(AUdpLink,-1,execSendText);
+AUTOGENERATE_FUNCTION(AUdpLink,-1,execBindPort);
 AUTOGENERATE_FUNCTION(APlayerPawn,-1,execDoChangeClass);
 AUTOGENERATE_FUNCTION(APlayerPawn,544,execResetKeyboard);
 AUTOGENERATE_FUNCTION(APlayerPawn,-1,execGetPlayerNetworkAddress);

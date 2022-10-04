@@ -1359,6 +1359,13 @@ void APawn::execClearPaths( FFrame& Stack, RESULT_DECL )
 	unclock(GetLevel()->FindPathCycles);
 }
 
+void AActor::MakeNoise(float Loudness)
+{
+	//debugf(" %s Make Noise with instigator", GetFullName(),Instigator->GetClass()->GetName());
+	if (GetLevel()->GetLevelInfo()->NetMode != NM_Client)
+		CheckNoiseHearing(Loudness);
+}
+
 /*MakeNoise
 - check to see if other creatures can hear this noise
 */
@@ -1367,9 +1374,7 @@ void AActor::execMakeNoise( FFrame& Stack, RESULT_DECL )
 	P_GET_FLOAT(Loudness);
 	P_FINISH;
 	
-	//debugf(" %s Make Noise with instigator", GetFullName(),Instigator->GetClass()->GetName());
-	if ( GetLevel()->GetLevelInfo()->NetMode != NM_Client )
-		CheckNoiseHearing(Loudness);
+	MakeNoise(Loudness);
 }
 
 void APawn::execLineOfSightTo( FFrame& Stack, RESULT_DECL )

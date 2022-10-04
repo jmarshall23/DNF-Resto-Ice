@@ -15,6 +15,7 @@ class Actor extends Object
 
 cpptext
 {
+	void MakeNoise(float Loudness);
 	void SetCallbackTimer(float NewTimerRate, UBOOL bLoop, FName CallbackName);
 	void EndCallbackTimer(FName CallbackName);
 	AActor *Trace(const FVector& TraceEnd, const FVector& TraceStart, bool bTraceActors, FVector *HitLocation = nullptr, FVector *HitNormal = nullptr, const FVector *Extent = nullptr, bool bMeshAccurate = false, int *HitMeshTri = nullptr, FVector *HitMeshBarys = nullptr, FName *HitMeshBone = nullptr, UTexture **HitMeshTexture = nullptr, FVector *HitUV = nullptr);

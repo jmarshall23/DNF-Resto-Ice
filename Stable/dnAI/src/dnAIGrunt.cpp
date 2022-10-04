@@ -159,3 +159,28 @@ bool AGrunt::CanUseWeapon(AWeapon *w)
 		return(false);
 	return(true);
 }
+
+void AGrunt::FireWeapon(void) 
+{
+	bool bUseAltMode = false;
+
+	if (Weapon == nullptr)
+	{
+		return;
+	}
+
+	if (Enemy == nullptr)
+	{
+		return;
+	}
+
+	if (LineOfSightTo(Enemy))
+	{
+		bFire = 1;
+		bAltFire = 0;
+		if (bShieldUser)
+			ShieldShotCount++;
+		MakeNoise(1.0);
+		Weapon->eventFireNative();
+	}	
+}

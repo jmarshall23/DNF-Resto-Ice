@@ -17,6 +17,8 @@ cpptext
 	bool CanFireAtEnemy(void);
 
 	bool CanUseWeapon(AWeapon *w);
+
+	void FireWeapon(void);
 }
 
 var SniperPoint TestDot;
@@ -446,26 +448,6 @@ function bool ShouldFireWeapon()
 	if( bCanFire && bReadyToAttack )
 		return true;
 }
-/*
-// Calculates the start and end points for the fire trace, adding optional error values as a mean deviation.
-simulated function GetTraceFireSegment( out vector Start, out vector End, out vector BeamStart, optional float HorizError, optional float VertError )
-{
-	local Pawn PawnOwner;
-	local vector X, Y, Z;
-	local rotator AdjustedAim;
-	local mesh OldMesh;
-
-	PawnOwner = self;
-	GetAxes( PawnOwner.ViewRotation, X, Y, Z );
-	Start = Location + BaseEyeHeight * vect(0,0,1);
-	AdjustedAim = AdjustAim( 1000000, Start, 2*Weapon.AimError, false, false );	
-	End = Start + HorizError * (FRand() - 0.5) * Y * 10000 + VertError * (FRand() - 0.5) * Z * 10000;
-	X = vector(Weapon.AdjustedAim);
-	End += (10000 * X);
-	if ( Weapon.MuzzleAnchor != None )
-		BeamStart = Weapon.MuzzleAnchor.Location;
-}
-*/
 
 function FirePipebomb( optional actor DestActor )
 {
@@ -482,37 +464,7 @@ function FirePipebomb( optional actor DestActor )
 	MyBomb.Velocity.z += 150; 
 }
 
-function FireWeapon()
-{
-	local bool bUseAltMode;
-
-//	FirePipeBomb();
-	//return;
-
-	if( Weapon!=None )
-	{
-		if( Enemy != None && LineOfSightTo( Enemy ) )
-		{
-		//	bUseAltMode = ShouldAltFireWeapon();
-			if( bUseAltMode )
-			{
-				broadcastmessage( "ALT FIRING!" );
-				bFire = 0;
-				bAltFire = 1;
-				Weapon.AltFire();
-			}
-			else
-			{
-				bFire = 1;
-				bAltFire = 0;
-				if( bShieldUser )
-					ShieldShotCount++;
-				MakeNoise( 1.0 );
-				Weapon.Fire();
-			}
-		}
-	}
-}
+native function FireWeapon();
 
 function PlayFiring()
 {
