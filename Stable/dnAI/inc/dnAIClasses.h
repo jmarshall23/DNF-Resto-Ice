@@ -430,8 +430,10 @@ public:
     FLOAT TimeExisted;
     BITFIELD bReEnableUseTrigger:1 GCC_PACK(4);
     FName UseTriggerEvent GCC_PACK(4);
+    DECLARE_FUNCTION(execAttitudeTo);
     DECLARE_FUNCTION(execTakeDamage);
     DECLARE_CLASS(AHumanNPC,AAIPawn,0|CLASS_Config)
+	EAttitude AttitudeTo(AActor *Other);
     NO_DEFAULT_CONSTRUCTOR(AHumanNPC)
 };
 
@@ -514,6 +516,7 @@ public:
     BITFIELD bCanAltFire:1 GCC_PACK(4);
     FLOAT CoverRadius GCC_PACK(4);
     DECLARE_FUNCTION(execPlayWeaponFire);
+    DECLARE_FUNCTION(execCanFireAtEnemy);
     DECLARE_FUNCTION(execEstablishCover);
     DECLARE_FUNCTION(execAutoFireWeapon);
     DECLARE_FUNCTION(execSetAutoFireOff);
@@ -539,7 +542,22 @@ public:
 	void AutoFireWeapon(void);
 
 	void PlayWeaponFire( float TweenTime = 0.0f );
+
+	bool CanFireAtEnemy(void);
     NO_DEFAULT_CONSTRUCTOR(AGrunt)
+};
+
+
+class DNAI_API AEDFshield : public AMountableDecoration
+{
+public:
+    BITFIELD bCanPlayDamage:1 GCC_PACK(4);
+    FLOAT TimeBetweenDamage GCC_PACK(4);
+    FLOAT DamageTimer;
+    INT ShieldHealth;
+    BITFIELD bUseShieldHealth:1 GCC_PACK(4);
+    DECLARE_CLASS(AEDFshield,AMountableDecoration,0)
+    NO_DEFAULT_CONSTRUCTOR(AEDFshield)
 };
 
 #endif
@@ -549,8 +567,10 @@ AUTOGENERATE_FUNCTION(APigCop,-1,execStateApproachingEnemy);
 AUTOGENERATE_FUNCTION(APigCop,-1,execTickAI);
 AUTOGENERATE_FUNCTION(APigCop,-1,execStateSeePlayer);
 AUTOGENERATE_FUNCTION(APigCop,-1,execBeginAI);
+AUTOGENERATE_FUNCTION(AHumanNPC,-1,execAttitudeTo);
 AUTOGENERATE_FUNCTION(AHumanNPC,-1,execTakeDamage);
 AUTOGENERATE_FUNCTION(AGrunt,-1,execPlayWeaponFire);
+AUTOGENERATE_FUNCTION(AGrunt,-1,execCanFireAtEnemy);
 AUTOGENERATE_FUNCTION(AGrunt,-1,execEstablishCover);
 AUTOGENERATE_FUNCTION(AGrunt,-1,execAutoFireWeapon);
 AUTOGENERATE_FUNCTION(AGrunt,-1,execSetAutoFireOff);

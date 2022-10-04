@@ -5,6 +5,11 @@ class HumanNPC expands AIPawn
 	native
 	abstract;
 
+cpptext
+{
+	EAttitude AttitudeTo(AActor *Other);
+}
+
 #exec OBJ LOAD FILE=..\Textures\m_characters.dtx
 #exec OBJ LOAD FILE=..\sounds\a_impact.dfx PACKAGE=A_Impact
 #exec OBJ LOAD FILE=..\Textures\m_fx.dtx
@@ -4669,16 +4674,7 @@ function bool CanStakeOut()
 			&& FastTrace(LastSeenPos , Enemy.Location + Pawn( Enemy ).BaseEyeHeight * vect(0,0,1)) );
 }
 
-function eAttitude AttitudeTo(Actor Other)
-{
-	local byte result;
-
-	if( Other != None && Other.IsA( 'PlayerPawn' ) )
-	{
-		return ATTITUDE_Ignore;
-	}
-	return ATTITUDE_Hate;
-}
+native function eAttitude AttitudeTo(Actor Other);
 
 function float AssessThreat( Actor NewThreat )
 {

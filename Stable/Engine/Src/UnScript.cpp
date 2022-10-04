@@ -1060,6 +1060,75 @@ void AActor::execSetOwner( FFrame& Stack, RESULT_DECL )
 	SetOwner( NewOwner );
 }
 
+AActor* AActor::Trace(const FVector& TraceEnd, const FVector& TraceStart, bool bTraceActors, FVector* HitLocation, FVector* HitNormal, const FVector* TraceExtent, bool bMeshAccurate, int* HitMeshTri, FVector* HitMeshBarys, FName* HitMeshBone, UTexture** HitMeshTexture, FVector* HitUV)
+{
+	// Trace the line.
+	FCheckResult Hit(1.0);
+	DWORD TraceFlags;
+	if (bTraceActors)
+		TraceFlags = TRACE_AllColliding | TRACE_ProjTargets;
+	else
+		TraceFlags = TRACE_VisBlocking;
+
+	if (TraceExtent == nullptr)
+	{
+		static FVector traceZero(0, 0, 0);
+
+		TraceExtent = &traceZero;
+	}
+
+	GetLevel()->SingleLineCheck(Hit, this, TraceEnd, TraceStart, TraceFlags, *TraceExtent, 0, bMeshAccurate);
+
+	/*if( Hit.Actor && Hit.Item!=INDEX_NONE )
+	{
+		UModel*  Model = Hit.Actor->IsA(ULevelInfo::StaticClass) ? XLevel->Model : Actor->Model;
+		FBspNode& Node = Model->Nodes( Hit.Item );
+		FBspSurf& Surf = Model->Surfs( Node.iSurf );
+		UTexture* HitTexture = Surf->Texture;
+		//do something with HitTexture
+	}*/
+
+	if (HitLocation != nullptr)
+	{
+		*HitLocation = Hit.Location;
+	}
+
+	if (HitNormal != nullptr)
+	{
+		*HitNormal = Hit.Normal;
+	}
+
+	if (bMeshAccurate) // CDH
+	{
+		if (HitMeshBone != nullptr)
+		{
+			*HitMeshBone = Hit.MeshBoneName;
+		}
+
+		if (HitMeshTri != nullptr)
+		{
+			*HitMeshTri = Hit.MeshTri;
+		}
+
+		if (HitMeshBarys != nullptr)
+		{
+			*HitMeshBarys = Hit.MeshBarys;
+		}
+
+		if (HitMeshTexture != nullptr)
+		{
+			*HitMeshTexture = Hit.MeshTexture;
+		}
+
+		if (HitUV != nullptr)
+		{
+			*HitUV = Hit.PointUV;
+		}
+	}
+
+	return Hit.Actor;
+}
+
 //////////////////
 // Line tracing //
 //////////////////
@@ -1080,35 +1149,7 @@ void AActor::execTrace( FFrame& Stack, RESULT_DECL )
 	P_GET_VECTOR_REF(HitUV); // !BR: optional
 	P_FINISH;
 
-	// Trace the line.
-	FCheckResult Hit(1.0);
-	DWORD TraceFlags;
-	if( bTraceActors )
-		TraceFlags = TRACE_AllColliding | TRACE_ProjTargets;
-	else
-		TraceFlags = TRACE_VisBlocking;
-
-	GetLevel()->SingleLineCheck( Hit, this, TraceEnd, TraceStart, TraceFlags, TraceExtent, 0, bMeshAccurate );
-	
-	/*if( Hit.Actor && Hit.Item!=INDEX_NONE )
-	{
-		UModel*  Model = Hit.Actor->IsA(ULevelInfo::StaticClass) ? XLevel->Model : Actor->Model;
-		FBspNode& Node = Model->Nodes( Hit.Item );
-		FBspSurf& Surf = Model->Surfs( Node.iSurf );
-		UTexture* HitTexture = Surf->Texture;
-		//do something with HitTexture
-	}*/
-	*(AActor**)Result = Hit.Actor;
-	*HitLocation      = Hit.Location;
-	*HitNormal        = Hit.Normal;
-	if (bMeshAccurate) // CDH
-	{
-		*HitMeshBoneName = Hit.MeshBoneName;
-		*HitMeshTri = Hit.MeshTri;
-		*HitMeshBarys = Hit.MeshBarys;
-		*HitMeshTexture = Hit.MeshTexture;
-		*HitUV = Hit.PointUV;
-	}
+	*(AActor**)Result = Trace(TraceEnd, TraceStart, bTraceActors, HitLocation, HitNormal, &TraceExtent, bMeshAccurate, HitMeshTri, HitMeshBarys, HitMeshBoneName, HitMeshTexture, HitUV);
 }
 
 void AActor::execFastTrace( FFrame& Stack, RESULT_DECL )

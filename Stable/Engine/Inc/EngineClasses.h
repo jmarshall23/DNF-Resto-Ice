@@ -172,6 +172,7 @@ AUTOGENERATE_NAME(CanFire)
 AUTOGENERATE_NAME(GottaReload)
 AUTOGENERATE_NAME(AddAmmo)
 AUTOGENERATE_NAME(FireNative)
+AUTOGENERATE_NAME(CalcDrawOffset)
 
 #if !defined(NAMES_ONLY) || defined(DN_FORCE_NAME_EXPORT)
 
@@ -1733,6 +1734,7 @@ public:
     DECLARE_CLASS(AActor,UObject,0|CLASS_NativeReplication)
 	void SetCallbackTimer(float NewTimerRate, UBOOL bLoop, FName CallbackName);
 	void EndCallbackTimer(FName CallbackName);
+	AActor *Trace(const FVector& TraceEnd, const FVector& TraceStart, bool bTraceActors, FVector *HitLocation = nullptr, FVector *HitNormal = nullptr, const FVector *Extent = nullptr, bool bMeshAccurate = false, int *HitMeshTri = nullptr, FVector *HitMeshBarys = nullptr, FName *HitMeshBone = nullptr, UTexture **HitMeshTexture = nullptr, FVector *HitUV = nullptr);
     #include "AActor.h"
 };
 
@@ -5155,6 +5157,10 @@ struct AInventory_eventUpdateTimers_Parms
 {
     FLOAT DeltaSeconds;
 };
+struct AInventory_eventCalcDrawOffset_Parms
+{
+    FVector ReturnValue;
+};
 struct AInventory_eventBotDesireability_Parms
 {
     class APawn* Bot;
@@ -5217,6 +5223,13 @@ public:
         AInventory_eventUpdateTimers_Parms Parms;
         Parms.DeltaSeconds=DeltaSeconds;
         ProcessEvent(FindFunctionChecked(ENGINE_UpdateTimers),&Parms);
+    }
+    inline FVector __fastcall eventCalcDrawOffset()
+    {
+        AInventory_eventCalcDrawOffset_Parms Parms;
+      //  Parms.ReturnValue=0;
+        ProcessEvent(FindFunctionChecked(ENGINE_CalcDrawOffset),&Parms);
+        return Parms.ReturnValue;
     }
     inline FLOAT __fastcall eventBotDesireability(class APawn* Bot)
     {

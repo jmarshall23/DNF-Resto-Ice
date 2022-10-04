@@ -3,7 +3,8 @@
 	Author: Nick Shaffner and Brandon Reinhart and Charlie Weiderhold and Charlie's Mom
 -----------------------------------------------------------------------------*/
 
-class dnDecoration expands Decoration;
+class dnDecoration expands Decoration
+	native;
 
 #exec OBJ LOAD FILE=..\Textures\m_generic.dtx
 #exec OBJ LOAD FILE=..\Meshes\c_generic.dmx
@@ -14,7 +15,7 @@ class dnDecoration expands Decoration;
 #exec OBJ LOAD FILE=..\sounds\a_impact.dfx
 
 // Spawn related information:
-var () struct SMountOnSpawn
+var () struct native SMountOnSpawn
 {
 	var() class<actor>	ActorClass;				// Class of the actor to mount, or none.
 	var actor			ActorReference;			// Internal reference to mounted actor 
@@ -39,7 +40,7 @@ var () float		   DamageFromImpactScaler 	?("Scales amount of damage object takes
 var () float		   DamageToImpactScaler 	?("Scales amount of damage object give on an impact.");
 var	   float           BounceElasticity;
 
-struct HealthMarker								// Events that occur whenever health drops below a certain threshold.
+struct native HealthMarker								// Events that occur whenever health drops below a certain threshold.
 {
 	var () int     		Threshold;				// When my health crosses this threashold.
 	var () name    		PlaySequence;			// Play this anim sequence.
@@ -130,7 +131,7 @@ var () name     BumpedSequence;				// Played whenever the object is touched.
 var () name		BumpedByPlayerSequence;		// Played whenever the object is touched by the player.
 
 // Spawns
-var () struct STriggeredSpawn
+var () struct native STriggeredSpawn
 {
 	var() class<actor>	ActorClass;
 	var() name			MountMeshItem;
@@ -166,7 +167,7 @@ var () sound	UntouchedAmbientSound;			// Ambient sound when player is untouched
 var () sound	HitWallAmbientSound;			// Ambient sound when a wall is hit.
 
 // Spawning:
-var () struct SSpawnOnDestroyed
+var () struct native SSpawnOnDestroyed
 {
 	var () class<actor> SpawnClass;				// Class to spawn
 	var () mesh		    ChangeMesh;				// Mesh to change to
@@ -175,7 +176,7 @@ var () struct SSpawnOnDestroyed
 	var () vector			VelocityVariance;		// Amount to vary velocity.
 	var () bool			bTossDecoration;
 	var () bool			bUseAlternateMotion;
-	var () struct SAlternateMotion
+	var () struct native SAlternateMotion
 	{
 		var () rotator		SpawnRotation	?("Range of rotation to give to this actor.");
 		var () rotator		SpawnRotationVariance	?("The spawn rotation will vary by this amount.");
@@ -186,7 +187,7 @@ var () struct SSpawnOnDestroyed
 } SpawnOnDestroyed[8];
 
 // Management of pending sequences:
-struct PendingSequence
+struct native PendingSequence
 {
 	var () name	PlaySequence;	// A pending sequence to be played once the current sequence completes.
 	var () bool Loop;			// Whether to loop the pending sequence until further notice

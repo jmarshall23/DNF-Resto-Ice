@@ -15,3 +15,6 @@
 #undef NAMES_ONLY
 
 IMPLEMENT_PACKAGE(dnGame);
+
+IMPLEMENT_CLASS(AdnDecoration);
+IMPLEMENT_CLASS(AMountableDecoration);

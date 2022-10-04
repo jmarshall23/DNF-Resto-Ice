@@ -2360,6 +2360,11 @@ void __fastcall UObject::execSubtractEqual_VectorVector( FFrame& Stack, RESULT_D
 }	
 IMPLEMENT_FUNCTION( UObject, 0x80 + 96, execSubtractEqual_VectorVector );
 
+float UObject::VSize(FVector& A)
+{
+	return A.Size();
+}
+
 void __fastcall UObject::execVSize( FFrame& Stack, RESULT_DECL )
 {
 
@@ -2600,6 +2605,14 @@ void __fastcall UObject::execSubtractEqual_RotatorRotator( FFrame& Stack, RESULT
 }
 IMPLEMENT_FUNCTION( UObject, 319, execSubtractEqual_RotatorRotator );
 
+void UObject::GetAxes(const FRotator& A, FVector& X, FVector& Y, FVector& Z)
+{
+	FCoords Coords = GMath.UnitCoords / A;
+	X = Coords.XAxis;
+	Y = Coords.YAxis;
+	Z = Coords.ZAxis;
+}
+
 void __fastcall UObject::execGetAxes( FFrame& Stack, RESULT_DECL )
 {
 
@@ -2609,12 +2622,7 @@ void __fastcall UObject::execGetAxes( FFrame& Stack, RESULT_DECL )
 	P_GET_VECTOR_REF(Z);
 	P_FINISH;
 
-	FCoords Coords = GMath.UnitCoords / A;
-	*X = Coords.XAxis;
-	*Y = Coords.YAxis;
-	*Z = Coords.ZAxis;
-
-	
+	GetAxes(A, *X, *Y, *Z);	
 }
 IMPLEMENT_FUNCTION( UObject, 0x80 + 101, execGetAxes );
 

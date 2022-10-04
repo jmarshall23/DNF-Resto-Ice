@@ -14,7 +14,7 @@ source_group("Classes" FILES ${dnAIClasses})
 
 add_library(dnAI SHARED ${dnAIFiles} ${dnAIClasses})
 
-target_link_libraries(dnAI PRIVATE Engine)
+target_link_libraries(dnAI PRIVATE Engine dnGame)
 
 target_include_directories(dnAI PRIVATE
     ../../Core/Inc

@@ -6,6 +6,11 @@ class Object
 	native
 	noexport;
 
+cpptext
+{
+	void GetAxes(const FRotator &A, FVector &X, FVector &Y, FVector &Z);
+}
+
 //=============================================================================
 // UObject variables.
 

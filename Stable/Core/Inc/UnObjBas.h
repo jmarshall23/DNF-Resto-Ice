@@ -6,6 +6,9 @@
 		* Created by Tim Sweeney
 =============================================================================*/
 
+class FRotator;
+class FVector;
+
 /*-----------------------------------------------------------------------------
 	Core enumerations.
 -----------------------------------------------------------------------------*/
@@ -568,6 +571,8 @@ public:
 		return (ObjName.GetIndex() ^ Outer) & (ARRAY_COUNT(GObjHash)-1);
 	}
 
+	float VSize(FVector& A);
+
 	// Functions.
 	void AddToRoot();
 	void RemoveFromRoot();
@@ -593,6 +598,8 @@ public:
 	void InitClassDefaultObject( UClass* InClass );
 	void __fastcall ProcessInternal( FFrame& TheStack, void*const Result );
 	void ParseParms( const TCHAR* Parms );
+
+	void GetAxes(const FRotator& A, FVector& X, FVector& Y, FVector& Z);
 
 	// Accessors.
 	UClass* GetClass() const

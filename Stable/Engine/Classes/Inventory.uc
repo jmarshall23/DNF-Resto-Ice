@@ -486,7 +486,7 @@ simulated event RenderOverlays( canvas Canvas )
 }
 
 // Compute offset for drawing.
-simulated final function vector CalcDrawOffset()
+simulated final event vector CalcDrawOffset()
 {
 	local vector DrawOffset, WeaponBob, X, Y, Z;
 	local Pawn PawnOwner;

@@ -13,6 +13,8 @@ cpptext
 	void AutoFireWeapon(void);
 
 	void PlayWeaponFire( float TweenTime = 0.0f );
+
+	bool CanFireAtEnemy(void);
 }
 
 var SniperPoint TestDot;
@@ -422,28 +424,7 @@ function WeaponSoundOn()
 	EndCallBackTimer( 'WeaponSoundOn' );
 }
 
-function bool CanFireAtEnemy()
-{
-	local vector HitLocation, HitNormal,X,Y,Z, projStart;
-	local actor HitActor;
-	
-	if( Weapon == None )
-		return false;
-	GetAxes( Rotation, X, Y, Z );
-	projStart = Location + Weapon.CalcDrawOffset() + Weapon.FireOffset.X * X + 1.2 * Weapon.FireOffset.Y * Y + Weapon.FireOffset.Z * Z;
-	if( Weapon.bInstantHit )
-		HitActor = Trace( HitLocation, HitNormal, Enemy.Location + Enemy.CollisionHeight * vect( 0, 0, 0.7), projStart, true );
-	else
-		HitActor = Trace( HitLocation, HitNormal, projStart + FMin(280, VSize(Enemy.Location - Location)) * Normal( Enemy.Location + Enemy.CollisionHeight * vect( 0, 0, 0.7 ) - Location ),  projStart, true );
-
-	if( HitActor == Enemy || ( HitActor != None && HitActor.IsA( 'EDFShield' ) ) || ( HitActor != None && HitActor.IsA( 'dnDecoration' ) && dnDecoration( HitActor ).HealthPrefab != HEALTH_NeverBreak ) )
-		return true;
-	if( (Pawn(HitActor) != None) && ( AttitudeTo( HitActor ) < ATTITUDE_Ignore ) )
-		return false;
-	if( HitActor != None && HitActor.bBlockActors )
-		return false;
-	return true;
-}
+native function bool CanFireAtEnemy();
 
 function bool ShouldFireWeapon()
 {

@@ -104,3 +104,35 @@ void AGrunt::SetAutoFireOff(void)
 {
 	EndCallbackTimer(TEXT("AutoFireWeapon"));
 }
+
+bool AGrunt::CanFireAtEnemy(void)
+{
+	FVector HitLocation, HitNormal, X, Y, Z, projStart;
+	AActor *HitActor;
+
+	if (Weapon == nullptr)
+		return false;
+
+	if (Enemy == nullptr)
+		return false;
+
+	GetAxes(Rotation, X, Y, Z);
+
+	projStart = Location + Weapon->eventCalcDrawOffset() + Weapon->FireOffset.X * X + 1.2 * Weapon->FireOffset.Y * Y + Weapon->FireOffset.Z * Z;
+
+	if (Weapon->bInstantHit)
+		HitActor = Trace(Enemy->Location + Enemy->CollisionHeight * FVector(0, 0, 0.7), projStart, true, &HitLocation, &HitNormal);
+	else
+		HitActor = Trace(projStart + Min<FLOAT>(280, VSize(Enemy->Location - Location)) * (Enemy->Location + Enemy->CollisionHeight * FVector(0, 0, 0.7) - Location).SafeNormal(), projStart, true, &HitLocation, &HitNormal);
+
+	if (HitActor == Enemy || (HitActor != nullptr && HitActor->IsA(AEDFshield::StaticClass())) || (HitActor != nullptr && HitActor->IsA(AdnDecoration::StaticClass()) && Cast<AdnDecoration>(HitActor)->HealthPrefab != HEALTH_NeverBreak))
+		return true;
+
+	if ((Cast<APawn>(HitActor) != nullptr) && (AttitudeTo(HitActor) < ATTITUDE_Ignore))
+		return false;
+
+	if (HitActor != nullptr && HitActor->bBlockActors)
+		return false;
+
+	return true;
+}

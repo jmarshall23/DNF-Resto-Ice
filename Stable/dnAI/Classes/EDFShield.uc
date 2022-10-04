@@ -1,4 +1,5 @@
-class EDFShield extends MountableDecoration;
+class EDFShield extends MountableDecoration
+	native;
 
 var bool bCanPlayDamage;
 var float TimeBetweenDamage;

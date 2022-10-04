@@ -32,6 +32,246 @@ public:
     NO_DEFAULT_CONSTRUCTOR(AdnSinglePlayer)
 };
 
+enum ELandDirection
+{
+    LAND_Forward            =0,
+    LAND_Backwards          =1,
+    LAND_Upright            =2,
+    LAND_UpsideDown         =3,
+    LAND_Left               =4,
+    LAND_Right              =5,
+    LAND_MAX                =6,
+};
+enum EHealthPrefab
+{
+    HEALTH_NeverBreak       =0,
+    HEALTH_Easy             =1,
+    HEALTH_Medium           =2,
+    HEALTH_SortaHard        =3,
+    HEALTH_Hard             =4,
+    HEALTH_UseHealthVar     =5,
+    HEALTH_MAX              =6,
+};
+enum EMassPrefab
+{
+    MASS_Ultralight         =0,
+    MASS_Light              =1,
+    MASS_Medium             =2,
+    MASS_Heavy              =3,
+    MASS_Rubber             =4,
+    MASS_MAX                =5,
+};
+struct DNGAME_API FPendingSequence
+{
+    FName PlaySequence;
+    BITFIELD Loop:1 GCC_PACK(4);
+    FName Event GCC_PACK(4);
+    class USound* Noise;
+    BITFIELD NoiseIsAmbient:1 GCC_PACK(4);
+    FLOAT Radius GCC_PACK(4);
+};
+
+struct DNGAME_API FSAlternateMotion
+{
+    FRotator SpawnRotation;
+    FRotator SpawnRotationVariance;
+    BITFIELD SpawnRotationNotRelative:1 GCC_PACK(4);
+    FLOAT SpawnSpeed GCC_PACK(4);
+    FLOAT SpawnSpeedVariance;
+};
+
+struct DNGAME_API FSSpawnOnDestroyed
+{
+    class UClass* SpawnClass;
+    class UMesh* ChangeMesh;
+    BITFIELD NoCollision:1 GCC_PACK(4);
+    FRotator RotationVariance GCC_PACK(4);
+    FVector VelocityVariance;
+    BITFIELD bTossDecoration:1 GCC_PACK(4);
+    BITFIELD bUseAlternateMotion:1;
+    FSAlternateMotion AlternateMotion GCC_PACK(4);
+};
+
+struct DNGAME_API FSTriggeredSpawn
+{
+    class UClass* ActorClass;
+    FName MountMeshItem;
+    BITFIELD SpawnOnce:1 GCC_PACK(4);
+    BITFIELD TriggerWhenTriggered:1;
+    class AActor* SpawnActor GCC_PACK(4);
+};
+
+struct DNGAME_API FHealthMarker
+{
+    INT Threshold;
+    FName PlaySequence;
+    BITFIELD LoopSequence:1 GCC_PACK(4);
+    BITFIELD PrefixTagToEvent:1;
+    FName TriggerEvent GCC_PACK(4);
+    class USound* StartSound;
+    class UMesh* ChangeMesh;
+    class UTexture* ChangeSkin;
+    class UClass* SpawnActor;
+};
+
+struct DNGAME_API FSMountOnSpawn
+{
+    class UClass* ActorClass;
+    class AActor* ActorReference;
+    BITFIELD SetMountOrigin:1 GCC_PACK(4);
+    FVector MountOrigin GCC_PACK(4);
+    BITFIELD SetMountAngles:1 GCC_PACK(4);
+    FRotator MountAngles GCC_PACK(4);
+    BITFIELD SurviveDismount:1 GCC_PACK(4);
+    BYTE MountType GCC_PACK(4);
+    FName MountMeshItem;
+    FName AppendToTag;
+    BITFIELD TakeParentTag:1 GCC_PACK(4);
+    BITFIELD TakeEvents:1;
+    FName SuccessEvent GCC_PACK(4);
+    FName FailEvent;
+};
+
+
+class DNGAME_API AdnDecoration : public ADecoration
+{
+public:
+    FSMountOnSpawn MountOnSpawn[12];
+    BITFIELD DontDie:1 GCC_PACK(4);
+    INT DamageThreshold GCC_PACK(4);
+    FLOAT DamageFromImpactScaler;
+    FLOAT DamageToImpactScaler;
+    FLOAT BounceElasticity;
+    FHealthMarker HealthMarkers[4];
+    class USound* HealthMarkerAmbientSound[4];
+    INT HealthMarkerSpawnFrags[4];
+    BITFIELD bUseLastMarkerAnim:1 GCC_PACK(4);
+    BITFIELD FallingPhysicsOnDamage:1;
+    FLOAT DelayedDamageTime GCC_PACK(4);
+    INT DelayedDamageAmount;
+    class UClass* FragType[8];
+    class UTexture* FragSkin;
+    INT NumberFragPieces;
+    FLOAT FragBaseScale;
+    BITFIELD AlertAIOnDestruction:1 GCC_PACK(4);
+    FName IdleAnimations[8] GCC_PACK(4);
+    FLOAT TriggerRadius;
+    FLOAT TriggerHeight;
+    BYTE TriggerType;
+    FLOAT TriggerRetriggerDelay;
+    BITFIELD TriggerMountToDecoration:1 GCC_PACK(4);
+    FLOAT LastTriggerTime GCC_PACK(4);
+    INT HealOnTrigger;
+    BITFIELD bDrinkSoundOnHeal:1 GCC_PACK(4);
+    class USound* DrinkSound GCC_PACK(4);
+    INT DamageOnTouch;
+    INT DamageOnPlayerTouch;
+    INT DamageOnTrigger;
+    INT DamageOnUntrigger;
+    INT DamageOnHitWall;
+    INT DamageOnHitWater;
+    INT DamageOnEMP;
+    INT DamageOtherOnTouch;
+    INT DamageOtherOnPlayerTouch;
+    INT DamageOtherOnHitWall;
+    FName DamageEvent;
+    FName DestroyedEvent;
+    FName TouchedEvent;
+    FName TouchedByPlayerEvent;
+    FName BumpedEvent;
+    FName BumpedByPlayerEvent;
+    FName UntouchedEvent;
+    FName UntouchedByPlayerEvent;
+    FName TriggerEvent;
+    FName UntriggerEvent;
+    FName HitWallEvent;
+    FName EMPEvent;
+    FName EMPunEvent;
+    class UClass* SpawnOnHit;
+    class UClass* SpawnOnEMP;
+    FName DamageSequence;
+    FName DamageSequenceOff;
+    FName TouchedSequence;
+    FName TouchedByPlayerSequence;
+    FName UntouchedSequence;
+    FName UntouchedByPlayerSequence;
+    FName TriggeredSequence;
+    FName UntriggeredSequence;
+    FName HitWallSequence;
+    FName BumpedSequence;
+    FName BumpedByPlayerSequence;
+    FSTriggeredSpawn TriggeredSpawn[4];
+    class USound* DamageSound;
+    class USound* DestroyedSound;
+    class USound* TouchedSound;
+    class USound* TouchedByPlayerSound;
+    class USound* BumpedSound;
+    class USound* BumpedByPlayerSound;
+    class USound* UntouchedSound;
+    class USound* UntouchedByPlayerSound;
+    class USound* TriggeredSound;
+    class USound* UntriggeredSound;
+    class USound* HitWallSound;
+    FLOAT BumpAgainTime;
+    FLOAT LastBumpTime;
+    class USound* DamageAmbientSound;
+    class USound* TouchAmbientSound;
+    class USound* TouchedByPlayerAmbientSound;
+    class USound* TriggeredAmbientSound;
+    class USound* UntriggeredAmbientSound;
+    class USound* UntouchedAmbientSound;
+    class USound* HitWallAmbientSound;
+    FSSpawnOnDestroyed SpawnOnDestroyed[8];
+    FPendingSequence PendingSequences[8];
+    INT CurrentPendingSequence;
+    BITFIELD LoopingSequence:1 GCC_PACK(4);
+    BITFIELD bSequenceToggle:1;
+    FPendingSequence ToggleOnSequences[8] GCC_PACK(4);
+    FPendingSequence ToggleOffSequences[8];
+    BITFIELD bSequenceToggleOn:1 GCC_PACK(4);
+    BITFIELD bTumble:1;
+    BYTE MassPrefab GCC_PACK(4);
+    BYTE HealthPrefab;
+    BITFIELD bLandForward:1 GCC_PACK(4);
+    BITFIELD bLandBackwards:1;
+    BITFIELD bLandLeft:1;
+    BITFIELD bLandRight:1;
+    BITFIELD bLandUpright:1;
+    BITFIELD bLandUpsideDown:1;
+    BYTE LandDirection GCC_PACK(4);
+    FLOAT LandUpCollisionRadius;
+    FLOAT LandUpCollisionHeight;
+    FLOAT LandFrontCollisionRadius;
+    FLOAT LandFrontCollisionHeight;
+    FLOAT LandSideCollisionRadius;
+    FLOAT LandSideCollisionHeight;
+    BITFIELD bDoneTumbling:1 GCC_PACK(4);
+    BITFIELD bCanTumble:1;
+    BITFIELD bWaterLogged:1;
+    BITFIELD bDamageFromToss:1;
+    class ATrigger* TriggerActor GCC_PACK(4);
+    FLOAT BaseTumbleRate;
+    BITFIELD bNotPushableAfterTumble:1 GCC_PACK(4);
+    BITFIELD bDropped:1;
+    BITFIELD bNoDamage:1;
+    BITFIELD bTelekineticable:1;
+    BITFIELD bTakeImpactDamage:1;
+    FName SuccessEvent GCC_PACK(4);
+    FName FailEvent;
+    class ABreakableGlass* LastGlass;
+    DECLARE_CLASS(AdnDecoration,ADecoration,0)
+    NO_DEFAULT_CONSTRUCTOR(AdnDecoration)
+};
+
+
+class DNGAME_API AMountableDecoration : public AdnDecoration
+{
+public:
+    BITFIELD bCanBeShotOff:1 GCC_PACK(4);
+    DECLARE_CLASS(AMountableDecoration,AdnDecoration,0)
+    NO_DEFAULT_CONSTRUCTOR(AMountableDecoration)
+};
+
 
 class DNGAME_API AdnWeapon : public AWeapon
 {

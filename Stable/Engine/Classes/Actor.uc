@@ -17,6 +17,7 @@ cpptext
 {
 	void SetCallbackTimer(float NewTimerRate, UBOOL bLoop, FName CallbackName);
 	void EndCallbackTimer(FName CallbackName);
+	AActor *Trace(const FVector& TraceEnd, const FVector& TraceStart, bool bTraceActors, FVector *HitLocation = nullptr, FVector *HitNormal = nullptr, const FVector *Extent = nullptr, bool bMeshAccurate = false, int *HitMeshTri = nullptr, FVector *HitMeshBarys = nullptr, FName *HitMeshBone = nullptr, UTexture **HitMeshTexture = nullptr, FVector *HitUV = nullptr);
 }
 
 // Imported data (during full rebuild).
@@ -1054,7 +1055,6 @@ native(277) final simulated function Actor Trace
     optional out texture HitMeshTexture,
 	optional out vector HitUV
 );
-
 
 // returns true if did not hit world geometry
 native(548) final simulated function bool FastTrace

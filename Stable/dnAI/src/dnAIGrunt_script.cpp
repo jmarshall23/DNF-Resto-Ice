@@ -5,6 +5,13 @@
 
 #include "dnAI.h"
 
+void AGrunt::execCanFireAtEnemy(FFrame& Stack, RESULT_DECL)
+{
+	P_FINISH;
+
+	*(DWORD*)Result = CanFireAtEnemy();
+}
+
 void AGrunt::execPlayWeaponFire(FFrame& Stack, RESULT_DECL)
 {
 	P_GET_FLOAT(TweenTime);

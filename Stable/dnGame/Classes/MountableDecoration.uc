@@ -2,7 +2,8 @@
 	MountableDecoration
 	Author: Brandon Reinhart
 -----------------------------------------------------------------------------*/
-class MountableDecoration extends dnDecoration;
+class MountableDecoration extends dnDecoration
+	native;
 
 var bool					bCanBeShotOff;
 
